@@ -1,0 +1,16 @@
+.pic {
+  border-radius: 50%;
+  height: auto; 
+  width: auto; 
+  max-width: 150px; 
+  max-height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.table {
+  border-radius: 5px;
+  width: 50%;
+  margin: auto;
+  float: none;
+}

@@ -1,0 +1,28 @@
+<div class="header clearfix">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Obra Pública - Ciudad Autónoma de Buenos Aires</a>
+    <ul class="nav nav-pills float-right mb-1">
+      <li class="nav-item">
+      <% if @home_selected_in_nav %>
+        <a class="nav-link active" href="/">Inicio <span class="sr-only">(current)</span></a>
+      <% else %>
+        <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
+      <% end %>
+      </li>
+      <li class="nav-item">
+        <% if @about_selected_in_nav %>
+          <a class="nav-link active" href="/contact" role="button">Contacto</a>
+        <% else %>
+          <a class="nav-link" href="/contact" role="button">Contacto</a>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <% if @student_list_selected_in_nav %>
+          <a class="nav-link active" href="/students" role="button">Students</a>
+        <% else %>
+          <a class="nav-link" href="/students" role="button">Students</a>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+</div>

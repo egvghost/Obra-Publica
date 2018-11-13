@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+ruby '2.2.3'
+gem 'byebug'
+gem 'shotgun'
+gem 'sinatra', '~> 1.4'
+gem 'yaml_store'
