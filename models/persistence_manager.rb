@@ -2,44 +2,44 @@ require 'yaml/store'
 class PersistenceManager
 
   def initialize
-    @student_file = YAML::Store.new 'obras.yml'
-    @student_file.transaction do
-      @student_file['student_list'] = [] if @student_file['student_list'].nil?
+    @archivo_de_obras = YAML::Store.new 'obras.yml'
+    @archivo_de_obras.transaction do
+      @archivo_de_obras['lista_de_obras'] = [] if @archivo_de_obras['lista_de_obras'].nil?
     end
   end
 
-  def add_student(student)
-    raise StudentException.new 'Student already exists' if student_list.include?(student)
-    @student_file.transaction do
-      @student_file['student_list'] << student #como el push?
+  def agregar_obra(obra)
+    raise ObrasException.new 'Ya existe una obra con ese ID' if lista_de_obras.include?(obra)
+    @archivo_de_obras.transaction do
+      @archivo_de_obras['lista_de_obras'] << obra
     end
   end
 
-  def student_list
-    @student_file.transaction do
-      @student_file['student_list']
+  def listar_obras
+    @archivo_de_obras.transaction do
+      @archivo_de_obras['lista_de_obras']
     end
   end
 
-  def get_student(student_email)
-    selected_students = student_list.select{ |student| student.email == student_email}
-    selected_students.first #porque 'select' SIEMPRE devuelve un array
+  def encontrar_obra(id_obra)
+    obra_elegida = lista_de_obras.select{ |obra| obra.id == id_obra}
+    obra_elegida.first
   end
 
-  def delete_student(student_email)
-    student = get_student student_email
-    raise StudentException.new 'Student not found by email' if student.nil?
-    @student_file.transaction do
-      @student_file['student_list'].delete_if {|student| student.email == student_email}
+  def eliminar_obra(id_obra)
+    obra = encontrar_obra id_obra
+    raise ObraException.new 'Obra no encontrada' if obra.nil?
+    @archivo_de_obras.transaction do
+      @archivo_de_obras['lista_de_obras'].delete_if {|obra| obra.id == id_obra}
     end
   end
 
-  def edit_student(new_student)
-    old_student = get_student(new_student.email)
-    raise StudentException.new 'Student not found by email' if old_student.nil?
-    @student_file.transaction do
-      @student_file['student_list'].delete(old_student)
-      @student_file['student_list'] << new_student
+  def modificar_obra(obra_nueva)
+    obra_previa = encontrar_obra(obra_nueva.id)
+    raise ObraException.new 'Obra no encontrada' if obra_previa.nil?
+    @archivo_de_obras.transaction do
+      @archivo_de_obras['lista_de_obras'].delete(obra_previa)
+      @archivo_de_obras['lista_de_obras'] << obra_nueva
     end
   end
 
