@@ -1,5 +1,7 @@
 require 'date'
 require 'byebug'
+require './models/input_exception.rb'
+require './models/obras_parser.rb'
 
 class ObraPublica
 
@@ -11,7 +13,7 @@ class ObraPublica
     comuna, barrio, direccion, fecha_inicio, fecha_fin_planeada, fecha_fin_real, porcentaje_avance, imagen)
 
     @etapas = ['En Ejecución', 'En Licitación', 'En Proyecto', 'Finalizada']
-    raise InputException.new('La etapa ingresada no coincide con las opciones permitidas') unless @etapas.include? etapa
+    raise InputException.new('La etapa ingresada no coincide con las opciones permitidas') unless @etapas.include?(etapa)
     raise InputException.new('El porcentaje de avance ingresado no est{a permitido') unless (porcentaje_avance >= 0 && porcentaje_avance <= 100)
     raise InputException.new('El monto ingresado no puede ser negativo') unless monto_contrato >= 0
     raise InputException.new('El número de comuna debe estar entre 1 y 15') unless (comuna >= 1 && comuna <=15)
