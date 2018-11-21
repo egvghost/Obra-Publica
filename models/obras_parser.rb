@@ -15,21 +15,31 @@ class ObrasParser
     raise 'file_path not provided' unless @file_path
     raise 'File does not exist' unless File.file? @file_path
 
-    obras = []
+    @obras = []
     SmarterCSV.process(@file_path, col_sep: ';') do |row|
       row = row.first
-      fecha_inicio = Date.strptime(row[:fecha_inicio],"%d/%m/%Y")
-      #byebug
-      fecha_fin_planeada = Date.strptime(row[:fecha_fin_planeada],"%d/%m/%Y")
-      unless row[:fecha_fin_real].nil?
-        fecha_fin_real = Date.strptime(row[:fecha_fin_real],"%d/%m/%Y")
+      if row[:fecha_inicio].nil? then
+        @fecha_inicio = ""
+      else
+        @fecha_inicio = Date.strptime(row[:fecha_inicio],"%d/%m/%Y")
       end
-      monto_contrato = row[:monto_contrato]
-      obras << ObraPublica.new(row[:id], row[:nombre], row[:etapa], row[:tipo], row[:area_responsable], \
-      row[:descripcion], monto_contrato.to_f, row[:comuna], row[:barrio], row[:direccion], fecha_inicio, \
-      fecha_fin_planeada, fecha_fin_real, row[:porcentaje_avance], row[:imagen])
+      #byebug
+      if row[:fecha_fin_planeada].nil? then
+        @fecha_fin_planeada = ""
+      else
+        @fecha_fin_planeada = Date.strptime(row[:fecha_fin_planeada],"%d/%m/%Y")
+      end
+      if row[:fecha_fin_real].nil? then
+        @fecha_fin_real = ""
+      else
+        @fecha_fin_real = Date.strptime(row[:fecha_fin_real],"%d/%m/%Y")
+      end
+      @monto_contrato = row[:monto_contrato].to_f
+      @obras << ObraPublica.new(row[:id], row[:nombre], row[:etapa], row[:tipo], row[:area_responsable], \
+      row[:descripcion], @monto_contrato, row[:comuna], row[:barrio], row[:direccion], @fecha_inicio, \
+      @fecha_fin_planeada, @fecha_fin_real, row[:porcentaje_avance], row[:imagen])
     end
-    return obras
+    return @obras
   end
   
 end
