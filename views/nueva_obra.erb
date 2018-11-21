@@ -1,0 +1,56 @@
+<div class="card">
+  <h5 class="card-header">Nueva Obra</h5>
+  <div class="card-body">
+    <% if @errors %>
+      <% @errors.each do |error| %>
+        <div class="alert alert-danger" role="alert">
+          <%= error%>
+        </div>
+      <% end %>
+    <% end %>
+    <form action='/nueva_obra' method='post'>
+      <div class="row align-items-center">
+        <div class="col">
+          Nombre:<br>
+          <input type="text" name="nombre"><br>
+          Tipo:<br>
+          <input type="text" name="tipo"><br>
+          Descripción:<br>
+          <textarea id="descripcion" cols="20" rows="9" class="fieldform" name="descripcion" maxlength="2000" aria-required="true"></textarea>
+        </div>
+        <div class="col">
+          Etapa:<br>
+          <select class="form-control" name="etapa" style="max-width:72%;">
+            <% @etapas.each do |etapa| %>
+              <option><%= etapa %></option>
+            <% end %>
+          </select><br>
+          Área responsable:<br>
+            <input type="text" name="area"><br>
+          Monto:<br>
+            <input type="number" step="0.01" placeholder="$" name="monto"><br>
+          Comuna:<br>
+            <input type="number" placeholder="1-15" min="1" max="15" name="comuna"><br>
+          Barrio:<br>
+            <input type="text" name="barrio"><br>
+          Dirección:<br>
+            <input type="address" name="direccion">
+        </div>
+        <div class="col">
+          Fecha de inicio:<br>
+            <input type="date" name="fecha_inicio"><br>
+          Fecha estimada de finalización:<br>
+            <input type="date" name="fecha_fin_planeada"><br>
+          Fecha de finalización:<br>
+            <input type="date" name="fecha_fin_real"><br>
+          Porcentaje de avance:<br>
+            <input type="range" min="0" max="100" name="avance" oninput="avance_elegido.value = avance.value">
+            <output name="avance_elegido" id="avance_elegido"></output><br>
+          Link a la imagen:<br>
+            <input type="url" placeholder="http://" name="imagen"><br><br><br>
+            <input type="submit" value="Submitir" class='btn btn-primary'>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
