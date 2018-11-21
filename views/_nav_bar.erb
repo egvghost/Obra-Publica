@@ -10,17 +10,38 @@
       <% end %>
       </li>
       <li class="nav-item">
-        <% if @contacto_selected_in_nav %>
-          <a class="nav-link active" href="/contacto" role="button">Contacto</a>
-        <% else %>
-          <a class="nav-link" href="/contacto" role="button">Contacto</a>
-        <% end %>
-      </li>
-      <li class="nav-item">
         <% if @nueva_obra_selected_in_nav %>
           <a class="nav-link active" href="/nueva_obra" role="button">Cargar Obra</a>
         <% else %>
           <a class="nav-link" href="/nueva_obra" role="button">Cargar Obra</a>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <% if @ver_obras_selected_in_nav %>
+          <a class="nav-link active" href="/ver_obras" role="button">Ver Obras</a>
+        <% else %>
+          <a class="nav-link" href="/ver_obras" role="button">Ver Obras</a>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <% if @estadisticas_selected_in_nav %>
+          <a class="nav-link active" href="/estadisticas" role="button">Estadísticas</a>
+        <% else %>
+          <a class="nav-link" href="/estadisticas" role="button">Estadísticas</a>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <% if @enunciado_selected_in_nav %>
+          <a class="nav-link active" href="/enunciado" role="button">Enunciado TP</a>
+        <% else %>
+          <a class="nav-link" href="/enunciado" role="button">Enunciado TP</a>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <% if @contacto_selected_in_nav %>
+          <a class="nav-link active" href="/contacto" role="button">Contacto</a>
+        <% else %>
+          <a class="nav-link" href="/contacto" role="button">Contacto</a>
         <% end %>
       </li>
     </ul>
