@@ -18,25 +18,13 @@ class ObrasParser
     @obras = []
     SmarterCSV.process(@file_path, col_sep: ';') do |row|
       row = row.first
-      if row[:fecha_inicio].nil? then
-        @fecha_inicio = ""
-      else
-        @fecha_inicio = Date.strptime(row[:fecha_inicio],"%d/%m/%Y")
-      end
       #byebug
-      if row[:fecha_fin_planeada].nil? then
-        @fecha_fin_planeada = ""
-      else
-        @fecha_fin_planeada = Date.strptime(row[:fecha_fin_planeada],"%d/%m/%Y")
-      end
-      if row[:fecha_fin_real].nil? then
-        @fecha_fin_real = ""
-      else
-        @fecha_fin_real = Date.strptime(row[:fecha_fin_real],"%d/%m/%Y")
-      end
-      @monto_contrato = row[:monto_contrato].to_f
+      @fecha_inicio = Date.strptime(row[:fecha_inicio],"%d/%m/%Y") unless row[:fecha_inicio].nil?
+      @fecha_fin_planeada = Date.strptime(row[:fecha_fin_planeada],"%d/%m/%Y") unless row[:fecha_fin_planeada].nil?
+      @fecha_fin_real = Date.strptime(row[:fecha_fin_real],"%d/%m/%Y") unless row[:fecha_fin_real].nil?
+      
       @obras << ObraPublica.new(row[:id], row[:nombre], row[:etapa], row[:tipo], row[:area_responsable], \
-      row[:descripcion], @monto_contrato, row[:comuna], row[:barrio], row[:direccion], @fecha_inicio, \
+      row[:descripcion], row[:monto_contrato], row[:comuna], row[:barrio], row[:direccion], @fecha_inicio, \
       @fecha_fin_planeada, @fecha_fin_real, row[:porcentaje_avance], row[:imagen])
     end
     return @obras
