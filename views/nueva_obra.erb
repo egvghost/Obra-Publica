@@ -28,7 +28,7 @@
           Área responsable:<br>
             <input type="text" name="area"><br>
           Monto:<br>
-            <input type="number" step="0.01" placeholder="$" name="monto"><br>
+            <input type="number" step="0.01" min="0" placeholder="$" name="monto"><br>
           Comuna:<br>
             <input type="number" placeholder="1-15" min="1" max="15" name="comuna"><br>
           Barrio:<br>
@@ -44,7 +44,7 @@
           Fecha de finalización:<br>
             <input type="date" name="fecha_fin_real"><br>
           Porcentaje de avance:<br>
-            <input type="range" min="0" max="100" step="0.1" name="avance" oninput="avance_elegido.value = avance.value">
+            <input type="range" min="0" max="100" name="avance" oninput="avance_elegido.value = avance.value">
             <output name="avance_elegido" id="avance_elegido"></output><br>
           Link a la imagen:<br>
             <input type="url" placeholder="http://" name="imagen"><br><br><br>
