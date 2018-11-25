@@ -1,0 +1,37 @@
+<div class="card">
+  <h5 class="card-header">Listado de Obras</h5>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Etapa</th>
+          <th scope="col">Comuna</th>
+          <th scope="col">Monto</th>
+          <th scope="col">Fecha Inicio</th>
+          <th scope="col">Avance</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @lista_de_obras.each do |obra| %>
+          <tr>
+            <th scope="row"><%=obra.nombre%></th>
+            <td><%=obra.etapa%></td>
+            <td><%=obra.comuna%></td>
+            <td>$<%=obra.monto_contrato%></td>
+            <td><%=obra.fecha_inicio%></td>
+            <td><%=obra.porcentaje_avance%>%</td>
+            <td width="28%">
+              <div class="row">
+                <a class="btn btn-success" href="/vista_obra/<%= obra.id %>">Detalles</a>
+                <a class="btn btn-primary" href="/modificar_obra/<%= obra.id %>">Modificar</a>
+                <a class="btn btn-danger" href="/eliminar_obra/<%= obra.id %>">Eliminar</a>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <a class="btn btn-primary" href="/">Inicio</a>
+  </div>
+</div>
