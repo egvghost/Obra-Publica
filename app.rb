@@ -18,13 +18,13 @@ post '/nueva_obra' do
   @title = 'OP -CABA [Vista obra]'
   @etapas = %w[En\ Ejecución En\ Licitación En\ Proyecto Finalizada]
   @errors = []
-  id = rand(50000)
+  @id = rand(50000)
   @monto = params['monto'].to_f
   @comuna = params['comuna'].to_i
   @avance = params['avance'].to_f
   #byebug
   begin
-    @nueva_obra = ObraPublica.new(id, params['nombre'], params['etapa'], params['tipo'], params['area'], params['descripcion'], @monto, 
+    @nueva_obra = ObraPublica.new(@id, params['nombre'], params['etapa'], params['tipo'], params['area'], params['descripcion'], @monto, 
     @comuna, params['barrio'], params['direccion'], params['fecha_inicio'], params['fecha_fin_planeada'], params['fecha_fin_real'], @avance, params['imagen'])
     persistence_manager = PersistenceManager.new
     persistence_manager.crear_obra @nueva_obra
@@ -32,20 +32,26 @@ post '/nueva_obra' do
     @errors << exception.message
   end
   if @errors.empty?
-    erb :vista_obra
+    @success = true
+    vista_obra(@id)
   else
     erb :nueva_obra
   end
 end
 
-get '/ver_obras' do
-  @title = 'OP -CABA [Listado de obras]'
-  erb :ver_obras
+get '/lista_obras' do
+  @title = 'OP -CABA [Lista de obras]'
+  obras
+end
+
+get '/vista_obra/:id' do
+  @title = 'OP -CABA [Vista de obra]'
+  vista_obra(params[:id])
 end
 
 get '/contacto' do
   @title = 'OP -CABA [Contacto]'
-  erb :contacto
+  obras
 end
 
 def index
@@ -67,5 +73,13 @@ private
 def obras
   persistence_manager = PersistenceManager.new
   @lista_de_obras = persistence_manager.lista_obras
-  erb :obras
+  erb :lista_obras
+end
+
+def vista_obra(id)
+  @id = id.to_i
+  #byebug
+  persistence_manager = PersistenceManager.new
+  @obra = persistence_manager.obra(@id)
+  erb :vista_obra
 end
