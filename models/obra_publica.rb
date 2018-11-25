@@ -1,6 +1,5 @@
 require 'date'
 require 'byebug'
-require './models/input_exception.rb'
 require './models/obras_parser.rb'
 
 class ObraPublica
@@ -25,7 +24,7 @@ class ObraPublica
     @fecha_inicio = fecha_inicio.to_s
     @fecha_fin_planeada = fecha_fin_planeada.to_s
     @fecha_fin_real = fecha_fin_real.to_s
-    @porcentaje_avance = porcentaje_avance.to_f
+    @porcentaje_avance = porcentaje_avance.to_i
     @imagen = imagen.to_s
     etapas = ['En Ejecución', 'En Licitación', 'En Proyecto', 'Finalizada']
     #byebug
@@ -37,9 +36,9 @@ class ObraPublica
     #raise InputException.new('El formato de fecha ingresado no es válido') unless...
     #raise InputException.new('La fecha final planificada debe ser posterior a la fecha de inicio') unless @fecha_fin_planeada > @fecha_inicio
     #raise InputException.new('La fecha final real debe ser posterior a la fecha de inicio') unless @fecha_fin_real > @fecha_inicio
-    # if @etapa == 'Finalizada' then 
-    #   raise InputException.new('Toda obra FINALIZADA debe tener un porcentaje de avance del 100% y una fecha de finalización real acorde') unless (@porcentaje_avance == 100 && ! @fecha_fin_real.empty?)
-    # end
+    if @etapa == 'Finalizada' then 
+      raise InputException.new('Toda obra FINALIZADA debe tener un porcentaje de avance del 100% y una fecha de finalización real acorde') unless (@porcentaje_avance == 100 && ! @fecha_fin_real.empty?)
+    end
     if @porcentaje_avance == 100 then 
       raise InputException.new('El 100% de avance sólo puede ser utilizado en obras FINALIZADAS') unless @etapa == 'Finalizada'
     end

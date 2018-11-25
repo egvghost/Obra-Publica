@@ -9,7 +9,7 @@ class PersistenceManager
   end
 
   def crear_obra(obra)
-    raise ObrasException.new 'Ya existe una obra con ese ID' if lista_obras.include?(obra)
+    raise InputException.new 'Ya existe una obra con ese ID' if lista_obras.include?(obra)
     @archivo_de_obras.transaction do
       @archivo_de_obras['lista_obras'] << obra
     end
@@ -28,7 +28,7 @@ class PersistenceManager
 
   def eliminar_obra(id_obra)
     obra = encontrar_obra id_obra
-    raise ObraException.new 'Obra no encontrada' if obra.nil?
+    raise InputException.new 'Obra no encontrada' if obra.nil?
     @archivo_de_obras.transaction do
       @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == id_obra}
     end
@@ -36,7 +36,7 @@ class PersistenceManager
 
   def modificar_obra(obra_nueva)
     obra_previa = encontrar_obra(obra_nueva.id)
-    raise ObraException.new 'Obra no encontrada' if obra_previa.nil?
+    raise InputException.new 'Obra no encontrada' if obra_previa.nil?
     @archivo_de_obras.transaction do
       @archivo_de_obras['lista_obras'].delete(obra_previa)
       @archivo_de_obras['lista_obras'] << obra_nueva
