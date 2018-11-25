@@ -5,7 +5,7 @@ require './models/obras_parser.rb'
 class ObraPublica
 
   attr_reader :id
-  attr_accessor :obras, :nombre, :etapa, :tipo, :area_responsable, :descripcion, :monto_contrato, 
+  attr_accessor :nombre, :etapa, :tipo, :area_responsable, :descripcion, :monto_contrato, 
   :comuna, :barrio, :direccion, :fecha_inicio, :fecha_fin_planeada, :fecha_fin_real, :porcentaje_avance, :imagen
 
   def initialize(id, nombre, etapa, tipo, area_responsable, descripcion, monto_contrato, 
@@ -42,9 +42,9 @@ class ObraPublica
     if @porcentaje_avance == 100 then 
       raise InputException.new('El 100% de avance sólo puede ser utilizado en obras FINALIZADAS') unless @etapa == 'Finalizada'
     end
-    # if ! @fecha_fin_real.empty? then 
-    #   raise InputException.new('La fecha de finalización real sólo está disponible para obras FINALIZADAS') unless @etapa == 'Finalizada'
-    # end
+    if ! @fecha_fin_real.empty? then 
+      raise InputException.new('La fecha de finalización real sólo se debe utilizar en obras FINALIZADAS') unless @etapa == 'Finalizada'
+    end
   end
 
 end
