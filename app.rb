@@ -2,6 +2,7 @@ require 'sinatra'
 require 'byebug'
 require './models/obra_publica.rb'
 require './models/persistence_manager.rb'
+require './models/input_exception.rb'
 
 get '/' do
   index
@@ -22,10 +23,10 @@ post '/nueva_obra' do
   @comuna = params['comuna'].to_i
   @avance = params['avance'].to_f
   #byebug
-  @nueva_obra = ObraPublica.new(id, params['nombre'], params['etapa'], params['tipo'], params['area'], params['descripcion'], @monto, 
-  @comuna, params['barrio'], params['direccion'], params['fecha_inicio'], params['fecha_fin_planeada'], params['fecha_fin_real'], @avance, params['imagen'])
-  persistence_manager = PersistenceManager.new
   begin
+    @nueva_obra = ObraPublica.new(id, params['nombre'], params['etapa'], params['tipo'], params['area'], params['descripcion'], @monto, 
+    @comuna, params['barrio'], params['direccion'], params['fecha_inicio'], params['fecha_fin_planeada'], params['fecha_fin_real'], @avance, params['imagen'])
+    persistence_manager = PersistenceManager.new
     persistence_manager.crear_obra @nueva_obra
   rescue => exception
     @errors << exception.message
@@ -33,7 +34,7 @@ post '/nueva_obra' do
   if @errors.empty?
     erb :vista_obra
   else
-    index
+    erb :nueva_obra
   end
 end
 
