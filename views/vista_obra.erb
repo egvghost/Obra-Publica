@@ -1,0 +1,33 @@
+<div class="card">
+  <h5 class="card-header">Vista de la Obra</h5>
+  <div class="card-body">
+    <div class="alert alert-success" role="alert">
+        Obra creada correctamente
+    </div>
+    <div class="row vertical-align">
+      <div class="col">
+        <strong>Nombre: </strong><%=@nueva_obra.nombre%><br><br>
+        <strong>Tipo: </strong><%=@nueva_obra.tipo%><br><br>
+        <strong>Descripción: </strong><%=@nueva_obra.descripcion%><br><br>
+      </div>
+      <div class="col">
+        <strong>Etapa: </strong><%=@nueva_obra.etapa%><br><br>
+        <strong>Área responsable: </strong><%=@nueva_obra.area_responsable%><br><br>
+        <strong>Monto: </strong>$<%=@nueva_obra.monto_contrato%><br><br>
+        <strong>Comuna: </strong><%=@nueva_obra.comuna%><br><br>
+        <strong>Barrio: </strong><%=@nueva_obra.barrio%><br><br>
+        <strong>Dirección: </strong><%=@nueva_obra.direccion%><br><br>
+      </div>
+      <div class="col">
+        <strong>Fecha de inicio: </strong><%=@nueva_obra.fecha_inicio%><br><br>
+        <strong>Fecha estimada de fin: </strong><%=@nueva_obra.fecha_fin_planeada%><br><br>
+        <strong>Fecha de finalización: </strong><%=@nueva_obra.fecha_fin_real%><br><br>
+        <strong>Porcentaje de avance: </strong><%=@nueva_obra.porcentaje_avance%>%<br><br>
+        <strong>Imagen:<br>
+          <img class="center-block img-responsive mb-3" src="<%=@nueva_obra.imagen%>" style="max-width:80%;">
+      </div>
+    </div>
+    <a class="btn btn-primary" href="/">Inicio</a>
+    <a class="btn btn-secondary" href="/nueva_obra">Cargar Nueva Obra</a>
+  </div>
+</div>
