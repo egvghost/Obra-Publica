@@ -18,11 +18,13 @@ post '/nueva_obra' do
   @title = 'OP -CABA [Vista obra]'
   @etapas = %w[En\ Ejecución En\ Licitación En\ Proyecto Finalizada]
   @errors = []
-  @id = rand(50000)
-  @monto = params['monto'].to_f
-  @comuna = params['comuna'].to_i
-  @avance = params['avance'].to_f
-  #byebug
+  @success = false
+  persistence_manager = PersistenceManager.new
+  loop do 
+    @id = rand(50000)
+    #byebug
+    break if persistence_manager.obra(@id).nil?
+  end
   begin
     @nueva_obra = ObraPublica.new(@id, params['nombre'], params['etapa'], params['tipo'], params['area'], params['descripcion'], @monto, 
     @comuna, params['barrio'], params['direccion'], params['fecha_inicio'], params['fecha_fin_planeada'], params['fecha_fin_real'], @avance, params['imagen'])
@@ -56,12 +58,21 @@ end
 
 def index
   @title = 'Obra Pública -CABA'
+  @errors = []
+  @success = false
   persistence_manager = PersistenceManager.new
   @lista_de_obras = persistence_manager.lista_obras
   if @lista_de_obras.empty?
-    parser = ObrasParser.new('./obras.csv')
-    obras = parser.parse
-    obras.each do |obra| persistence_manager.crear_obra obra
+    begin
+      parser = ObrasParser.new('./obras.csv')
+      obras = parser.parse
+      obras.each do |obra| persistence_manager.crear_obra obra
+      end
+    rescue => exception
+      @errors << exception.message
+    end
+    if @errors.empty?
+      @success = true
     end
   end
   erb :index

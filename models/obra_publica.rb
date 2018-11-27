@@ -28,22 +28,26 @@ class ObraPublica
     @imagen = imagen.to_s
     etapas = ['En Ejecución', 'En Licitación', 'En Proyecto', 'Finalizada']
     #byebug
-    raise InputException.new('La etapa ingresada no coincide con las opciones permitidas') unless etapas.include?(@etapa)
-    raise InputException.new('El porcentaje de avance ingresado no está permitido') unless (@porcentaje_avance >= 0 && @porcentaje_avance <= 100)
-    raise InputException.new('El monto ingresado no puede ser negativo') unless (@monto_contrato >= 0)
-    raise InputException.new('El número de comuna debe estar entre 1 y 15') unless (@comuna >= 1 && @comuna <=15)
-    raise InputException.new('La descripción no puede contener más de 2000 caracteres') unless (@descripcion.length <= 2000)
+    raise InputException.new("ID:#{@id} - La etapa ingresada no coincide con las opciones permitidas") unless etapas.include?(@etapa)
+    raise InputException.new("ID:#{@id} - El porcentaje de avance ingresado no está permitido") unless (@porcentaje_avance >= 0 && @porcentaje_avance <= 100)
+    raise InputException.new("ID:#{@id} - El monto ingresado no puede ser negativo") unless (@monto_contrato >= 0)
+    raise InputException.new("ID:#{@id} - El número de comuna debe estar entre 1 y 15") unless (@comuna >= 1 && @comuna <=15)
+    raise InputException.new("ID:#{@id} - La descripción no puede contener más de 2000 caracteres") unless (@descripcion.length <= 2000)
     #raise InputException.new('El formato de fecha ingresado no es válido') unless...
-    #raise InputException.new('La fecha final planificada debe ser posterior a la fecha de inicio') unless @fecha_fin_planeada > @fecha_inicio
-    #raise InputException.new('La fecha final real debe ser posterior a la fecha de inicio') unless @fecha_fin_real > @fecha_inicio
+    unless (@fecha_inicio.empty? || @fecha_fin_planeada.empty?)
+      raise InputException.new("ID:#{@id} - La fecha final estimada debe ser posterior a la fecha de inicio") unless (Date.parse(@fecha_inicio) <=> Date.parse(@fecha_fin_planeada)) == -1
+    end
+    unless (@fecha_inicio.empty? || @fecha_fin_real.empty?)
+      raise InputException.new("ID:#{@id} - La fecha de finalización debe ser posterior a la fecha de inicio") unless (Date.parse(@fecha_inicio) <=> Date.parse(@fecha_fin_real)) == -1
+    end
     if @etapa == 'Finalizada' then 
-      raise InputException.new('Toda obra FINALIZADA debe tener un porcentaje de avance del 100% y una fecha de finalización real acorde') unless (@porcentaje_avance == 100 && ! @fecha_fin_real.empty?)
+      raise InputException.new("ID:#{@id} - Toda obra FINALIZADA debe tener un porcentaje de avance del 100% y una fecha de finalización real acorde") unless (@porcentaje_avance == 100 && ! @fecha_fin_real.empty?)
     end
     if @porcentaje_avance == 100 then 
-      raise InputException.new('El 100% de avance sólo puede ser utilizado en obras FINALIZADAS') unless @etapa == 'Finalizada'
+      raise InputException.new("ID:#{@id} - El 100% de avance sólo puede ser utilizado en obras FINALIZADAS") unless @etapa == 'Finalizada'
     end
     if ! @fecha_fin_real.empty? then 
-      raise InputException.new('La fecha de finalización real sólo se debe utilizar en obras FINALIZADAS') unless @etapa == 'Finalizada'
+      raise InputException.new("ID:#{@id} - La fecha de finalización real sólo se debe utilizar en obras FINALIZADAS") unless @etapa == 'Finalizada'
     end
   end
 
