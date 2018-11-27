@@ -1,6 +1,18 @@
 <div class="card">
   <h5 class="card-header">Bienvenido al site de Obra Pública en CABA</h5>
   <div class="card-body">
+    <% if @errors %>
+      <% @errors.each do |error| %>
+        <div class="alert alert-danger" role="alert">
+          <%= error%>
+        </div>
+      <% end %>
+    <% end %>
+    <% if @success %>
+      <div class="alert alert-success" role="alert">
+          Archivo .csv importado correctamente
+      </div>
+    <% end %>
     <div class="col text-center">
         <img class="center-block img-responsive mb-3" src="/images/pics/welcome.jpg" style="max-width:50%;">
       </div>
