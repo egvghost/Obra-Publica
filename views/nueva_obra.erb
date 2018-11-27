@@ -9,7 +9,7 @@
       <% end %>
     <% end %>
     <form action='/nueva_obra' method='post'>
-      <div class="row align-items-center">
+      <div class="row align-items-start">
         <div class="col">
           Nombre:<br>
           <input type="text" name="nombre"><br>
@@ -20,11 +20,11 @@
         </div>
         <div class="col">
           Etapa:<br>
-          <select class="form-control" name="etapa" style="max-width:72%;">
+          <select class="form-control" name="etapa" style="height:33px;max-width:72%;">
             <% @etapas.each do |etapa| %>
               <option><%= etapa %></option>
             <% end %>
-          </select><br>
+          </select>
           Área responsable:<br>
             <input type="text" name="area"><br>
           Monto:<br>

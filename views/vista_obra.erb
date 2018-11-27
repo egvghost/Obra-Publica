@@ -1,9 +1,9 @@
 <div class="card">
-  <h5 class="card-header">Detalles de la Obra</h5>
+  <h5 class="card-header">Detalles de la Obra - ID:<%=@obra.id%></h5>
   <div class="card-body">
     <% if @success %>
       <div class="alert alert-success" role="alert">
-          Obra creada correctamente
+          Obra ingresada correctamente
       </div>
     <% end %>
     <div class="row vertical-align">
@@ -30,10 +30,11 @@
       </div>
     </div>
     <div class="row">
-      <a class="btn btn-primary" href="/">Inicio</a> &nbsp;
+      <a class="btn btn-secondary" href="/">Inicio</a> &nbsp;
       <% if @success %>
         <a class="btn btn-success" href="/nueva_obra">Cargar nueva Obra</a> &nbsp;
       <% end %>
+      <a class="btn btn-primary" href="/modificar_obra/<%=@obra.id%>">Modificar</a> &nbsp;
       <form action="/obra/<%= @obra.id %>" method="post">
         <input type='hidden' name='_method' value='DELETE'/>
         <button type='submit' class='btn btn-danger'>Eliminar</button> &nbsp;

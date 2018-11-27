@@ -36,9 +36,9 @@
             <td><%=obra.porcentaje_avance%>%</td>
             <td width="28%">
               <div class="row">
-                <a class="btn btn-success" href="/vista_obra/<%= obra.id %>">Detalles</a> &nbsp;
-                <a class="btn btn-primary" href="/modificar_obra/<%= obra.id %>">Modificar</a> &nbsp;
-                <form action="/obra/<%= obra.id %>" method="post">
+                <a class="btn btn-success" href="/vista_obra/<%=obra.id%>">Detalles</a> &nbsp;
+                <a class="btn btn-primary" href="/modificar_obra/<%=obra.id%>">Modificar</a> &nbsp;
+                <form action="/obra/<%=obra.id%>" method="post">
                   <input type='hidden' name='_method' value='DELETE'/>
                   <button type='submit' class='btn btn-danger'>Eliminar</button>
                 </form>

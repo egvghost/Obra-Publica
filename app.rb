@@ -50,12 +50,42 @@ get '/vista_obra/:id' do
   vista_obra(params[:id])
 end
 
+get '/modificar_obra/:id' do
+  @title = 'OP -CABA [Modificar obra]'
+  @errors = []
+  @etapas = %w[En\ Ejecución En\ Licitación En\ Proyecto Finalizada]
+  persistence_manager = PersistenceManager.new
+  begin
+    @obra_actual = persistence_manager.obra(params[:id])
+  rescue => exception
+    @errors << exception.message
+  end
+  erb :modificar_obra
+end
+
+put '/modificar_obra/:id' do
+  @errors = []
+  persistence_manager = PersistenceManager.new
+
+  begin
+    @obra = persistence_manager.obra(params[:id])
+    @obra.nombre = params[:nombre]
+    @obra.tipo = params[:tipo]
+    @obra.descripcion = params[:descripcion]
+    persistence_manager.modificar_obra(@obra)
+  rescue => exception
+    @errors << exception.message
+  end
+
+  erb :vista_obra
+end
+
 delete '/obra/:id' do
   @errors = []
   @success_delete = false
   persistence_manager = PersistenceManager.new
   begin
-    persistence_manager.eliminar_obra(params[:id].to_i)
+    persistence_manager.eliminar_obra(params[:id])
   rescue => exception
     @errors << exception.message
   end
@@ -103,9 +133,8 @@ def obras
 end
 
 def vista_obra(id)
-  @id = id.to_i
   #byebug
   persistence_manager = PersistenceManager.new
-  @obra = persistence_manager.obra(@id)
+  @obra = persistence_manager.obra(id)
   erb :vista_obra
 end

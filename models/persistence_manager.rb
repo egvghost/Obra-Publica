@@ -22,15 +22,17 @@ class PersistenceManager
   end
 
   def obra(id_obra)
-    obra_elegida = lista_obras.select{ |obra| obra.id == id_obra }
+    @id_obra = id_obra.to_i
+    obra_elegida = lista_obras.select{ |obra| obra.id == @id_obra }
     obra_elegida.first
   end
 
   def eliminar_obra(id_obra)
-    obra_a_eliminar = obra(id_obra)
+    @id_obra = id_obra.to_i
+    obra_a_eliminar = obra(@id_obra)
     raise InputException.new 'Obra no encontrada' if obra_a_eliminar.nil?
     @archivo_de_obras.transaction do
-      @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == id_obra}
+      @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == @id_obra}
     end
   end
 
