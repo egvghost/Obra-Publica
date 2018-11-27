@@ -29,10 +29,16 @@
           <img class="center-block img-responsive mb-3" src="<%=@obra.imagen%>" style="max-width:80%;">
       </div>
     </div>
-    <a class="btn btn-primary" href="/">Inicio</a>
-    <% if @success %>
-      <a class="btn btn-success" href="/nueva_obra">Cargar nueva Obra</a>
-    <% end %>
-    <a class="btn btn-warning" href="/lista_obras">Lista de Obras</a>
+    <div class="row">
+      <a class="btn btn-primary" href="/">Inicio</a> &nbsp;
+      <% if @success %>
+        <a class="btn btn-success" href="/nueva_obra">Cargar nueva Obra</a> &nbsp;
+      <% end %>
+      <form action="/obra/<%= @obra.id %>" method="post">
+        <input type='hidden' name='_method' value='DELETE'/>
+        <button type='submit' class='btn btn-danger'>Eliminar</button> &nbsp;
+      </form>
+      <a class="btn btn-warning" href="/lista_obras">Lista de Obras</a>
+    </div>
   </div>
 </div>

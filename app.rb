@@ -42,7 +42,6 @@ post '/nueva_obra' do
 end
 
 get '/lista_obras' do
-  @title = 'OP -CABA [Lista de obras]'
   obras
 end
 
@@ -50,6 +49,21 @@ get '/vista_obra/:id' do
   @title = 'OP -CABA [Vista de obra]'
   vista_obra(params[:id])
 end
+
+delete '/obra/:id' do
+  @errors = []
+  @success_delete = false
+  persistence_manager = PersistenceManager.new
+  begin
+    persistence_manager.eliminar_obra(params[:id].to_i)
+  rescue => exception
+    @errors << exception.message
+  end
+  if @errors.empty?
+    @success_delete = true
+  end
+  obras
+end  
 
 get '/contacto' do
   @title = 'OP -CABA [Contacto]'
@@ -82,6 +96,7 @@ end
 private
 
 def obras
+  @title = 'OP -CABA [Lista de obras]'
   persistence_manager = PersistenceManager.new
   @lista_de_obras = persistence_manager.lista_obras
   erb :lista_obras

@@ -1,6 +1,18 @@
 <div class="card">
   <h5 class="card-header">Listado de Obras</h5>
   <div class="card-body">
+    <% if @errors %>
+      <% @errors.each do |error| %>
+        <div class="alert alert-danger" role="alert">
+          <%= error%>
+        </div>
+      <% end %>
+    <% end %>
+    <% if @success_delete %>
+      <div class="alert alert-success" role="alert">
+          La obra fue eliminada correctamente
+      </div>
+    <% end %>
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>
@@ -24,9 +36,12 @@
             <td><%=obra.porcentaje_avance%>%</td>
             <td width="28%">
               <div class="row">
-                <a class="btn btn-success" href="/vista_obra/<%= obra.id %>">Detalles</a>
-                <a class="btn btn-primary" href="/modificar_obra/<%= obra.id %>">Modificar</a>
-                <a class="btn btn-danger" href="/eliminar_obra/<%= obra.id %>">Eliminar</a>
+                <a class="btn btn-success" href="/vista_obra/<%= obra.id %>">Detalles</a> &nbsp;
+                <a class="btn btn-primary" href="/modificar_obra/<%= obra.id %>">Modificar</a> &nbsp;
+                <form action="/obra/<%= obra.id %>" method="post">
+                  <input type='hidden' name='_method' value='DELETE'/>
+                  <button type='submit' class='btn btn-danger'>Eliminar</button>
+                </form>
               </div>
             </td>
           </tr>
