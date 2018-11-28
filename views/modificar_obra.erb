@@ -48,7 +48,10 @@
           <input type="number" placeholder="%" min="0" max="100" name="avance" value="<%=@obra_actual.porcentaje_avance%>" class="form-control"><br>
           Link a la imagen:<br>
           <input type="url" placeholder="http://" name="imagen" value="<%=@obra_actual.imagen%>" class="form-control"><br><br>
-          <button type='submit' class='btn btn-primary' style="float:right">Guardar</button>
+          <div class="row justify-content-center">
+            <a class="btn btn-danger" href="/vista_obra/<%=@obra_actual.id%> ">Cancelar</a> &nbsp; &nbsp; &nbsp;
+            <button type='submit' class='btn btn-primary'>Guardar</button>
+          </div>
         </div>
       </div>
     </form>
