@@ -40,7 +40,7 @@ class PersistenceManager
     obra_previa = obra(obra_nueva.id)
     raise InputException.new 'Obra no encontrada' if obra_previa.nil?
     @archivo_de_obras.transaction do
-      @archivo_de_obras['lista_obras'].delete(obra_previa)
+      @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == obra_previa.id}
       @archivo_de_obras['lista_obras'] << obra_nueva
     end
   end

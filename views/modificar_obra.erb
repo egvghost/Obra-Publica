@@ -8,7 +8,7 @@
         </div>
       <% end %>
     <% end %>
-    <form action='/obra/<%=@obra_actual.id%>' method='post'>
+    <form action='/modificar_obra/<%=@obra_actual.id%>' method='post'>
       <input type='hidden' name='_method' value='PUT'/>
       <div class="row align-items-start">
         <div class="col">
@@ -17,7 +17,7 @@
           Tipo:<br>
           <input type="text" name="tipo" value="<%=@obra_actual.tipo%>" class="form-control"><br>
           Descripción:<br>
-          <textarea id="descripcion" cols="29" rows="12" class="fieldform" name="descripcion" maxlength="2000" aria-required="true" class="form-control"><%=@obra_actual.descripcion%></textarea>
+          <textarea id="descripcion" cols="29" rows="12" class="fieldform" name="descripcion" maxlength="2000" aria-required="true" style="height: 295px;" class="form-control"><%=@obra_actual.descripcion%></textarea>
         </div>
         <div class="col">
           Etapa:<br>
@@ -45,11 +45,10 @@
           Fecha de finalización:<br>
           <input type="date" name="fecha_fin_real" value="<%=@obra_actual.fecha_fin_real%>" class="form-control"><br>
           Porcentaje de avance:<br>
-          <input type="range" min="0" max="100" name="avance" oninput="avance_elegido.value = avance.value">
-          <output name="avance_elegido" id="avance_elegido"><%=@obra_actual.porcentaje_avance%></output><br>
+          <input type="number" placeholder="%" min="0" max="100" name="avance" value="<%=@obra_actual.porcentaje_avance%>" class="form-control"><br>
           Link a la imagen:<br>
-          <input type="url" placeholder="http://" name="imagen" value="<%=@obra_actual.imagen%>" class="form-control"><br><br><br>
-          <button type='submit' class='btn btn-primary'>Guardar</button>
+          <input type="url" placeholder="http://" name="imagen" value="<%=@obra_actual.imagen%>" class="form-control"><br><br>
+          <button type='submit' class='btn btn-primary' style="float:right">Guardar</button>
         </div>
       </div>
     </form>
