@@ -21,9 +21,30 @@
         <strong>Dirección: </strong><%=@obra.direccion%><br><br>
       </div>
       <div class="col">
-        <strong>Fecha de inicio: </strong><%=@obra.fecha_inicio%><br><br>
-        <strong>Fecha estimada de fin: </strong><%=@obra.fecha_fin_planeada%><br><br>
-        <strong>Fecha de finalización: </strong><%=@obra.fecha_fin_real%><br><br>
+        <strong>Fecha de inicio: </strong>
+        <%if @obra.fecha_inicio.empty?%>
+          <%date=""%>
+        <%else%>
+          <%date=Date.parse(@obra.fecha_inicio)%> 
+          <%date=date.strftime("%d-%m-%Y")%>
+        <%end%>
+        <%=date%><br><br>
+        <strong>Fecha estimada de fin: </strong>
+        <%if @obra.fecha_fin_planeada.empty?%>
+          <%date=""%>
+        <%else%>
+          <%date=Date.parse(@obra.fecha_fin_planeada)%> 
+          <%date=date.strftime("%d-%m-%Y")%>
+        <%end%>
+        <%=date%><br><br>
+        <strong>Fecha de finalización: </strong>
+        <%if @obra.fecha_fin_real.empty?%>
+          <%date=""%>
+        <%else%>
+          <%date=Date.parse(@obra.fecha_fin_real)%> 
+          <%date=date.strftime("%d-%m-%Y")%>
+        <%end%>
+        <%=date%><br><br>
         <strong>Porcentaje de avance: </strong><%=@obra.porcentaje_avance%>%<br><br>
         <strong>Imagen:<br>
           <img class="center-block img-responsive mb-3" src="<%=@obra.imagen%>" style="max-width:80%;">

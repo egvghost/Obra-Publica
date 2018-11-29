@@ -139,7 +139,8 @@ private
 def obras
   @title = 'OP -CABA [Lista de obras]'
   persistence_manager = PersistenceManager.new
-  @lista_de_obras = persistence_manager.lista_obras
+  @lista_de_obras = persistence_manager.lista_obras.sort_by {|item| item.fecha_inicio}
+  @lista_de_obras.reverse!
   erb :lista_obras
 end
 

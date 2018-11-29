@@ -20,9 +20,9 @@
           <th scope="col">Etapa</th>
           <th scope="col">Comuna</th>
           <th scope="col">Monto</th>
-          <th scope="col">Fecha Inicio</th>
+          <th scope="col">Inicio</th>
           <th scope="col">Avance</th>
-          <th scope="col">Acciones</th>
+          <th scope="col" style="text-align:center">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +32,15 @@
             <td><%=obra.etapa%></td>
             <td><%=obra.comuna%></td>
             <td>$<%=obra.monto_contrato%></td>
-            <td><%=obra.fecha_inicio%></td>
+            <td>
+              <%if obra.fecha_inicio.empty?%>
+                <%date=""%>
+              <%else%>
+                <%date=Date.parse(obra.fecha_inicio)%> 
+                <%date=date.strftime("%d-%m-%Y")%>
+              <%end%>
+              <%=date%>
+            </td>
             <td><%=obra.porcentaje_avance%>%</td>
             <td width="28%">
               <div class="row">
@@ -46,7 +54,8 @@
             </td>
           </tr>
         <% end %>
-      </table>
-    <a class="btn btn-primary" href="/">Inicio</a>
+      </table><br>
+    <a class="btn btn-warning" href="/">Inicio</a>
+    <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>
 </div>
