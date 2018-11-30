@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'byebug'
+require 'date'
 require './models/obra_publica.rb'
 require './models/persistence_manager.rb'
 require './models/input_exception.rb'
@@ -104,7 +105,23 @@ delete '/obra/:id' do
     @success_delete = true
   end
   obras
-end  
+end
+
+get '/estadisticas' do
+  @title = 'OP -CABA [Estadísticas]'
+  obras_comuna = Hash.new(0)
+  obras_año = Hash.new(0)
+  persistence_manager = PersistenceManager.new
+  #byebug
+  @lista_de_obras = persistence_manager.lista_obras
+  @lista_de_obras.each  {|obra| obras_comuna["Comuna #{obra.comuna}"] += 1 }
+  @lista_de_obras.each  {|obra| obras_año["Año #{Date.parse(obra.fecha_fin_real).year}"] += 1 unless obra.fecha_fin_real.empty?}
+
+  @obras_comuna_max = obras_comuna.select {|k,v| v == obras_comuna.values.max}#.to_a.map &:first
+  @obras_año_max = obras_año.select {|k,v| v == obras_año.values.max}#.to_a.map &:first
+
+  erb :estadisticas
+end
 
 get '/contacto' do
   @title = 'OP -CABA [Contacto]'

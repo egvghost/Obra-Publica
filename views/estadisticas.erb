@@ -1,0 +1,25 @@
+<div class="card">
+  <h5 class="card-header">Estadísticas</h5>
+  <div class="card-body">
+    <% if @errors %>
+      <% @errors.each do |error| %>
+        <div class="alert alert-danger" role="alert">
+          <%= error%>
+        </div>
+      <% end %>
+    <% end %>
+    <p class="card-text">Comuna(s) con mayor cantidad de obras:</p>
+    <ul>
+      <% @obras_comuna_max.each do |comuna, cant_obras|%>
+        <li><strong><%= comuna %></strong>: <%= cant_obras %></li> 
+      <% end %>  
+    </ul>
+    <p class="card-text">Año(s) en el(los) que se finalizaron mayor cantidad de obras:</p>
+    <ul>
+      <% @obras_año_max.each do |año, cant_obras|%>
+        <li><strong><%= año %></strong>: <%= cant_obras %></li> 
+      <% end %>  
+    </ul>
+
+  </div>
+</div>
