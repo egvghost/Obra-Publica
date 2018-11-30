@@ -13,48 +13,50 @@
           La obra fue eliminada correctamente
       </div>
     <% end %>
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Etapa</th>
-          <th scope="col">Comuna</th>
-          <th scope="col">Monto</th>
-          <th scope="col">Inicio</th>
-          <th scope="col">Avance</th>
-          <th scope="col" style="text-align:center">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @lista_de_obras.each do |obra| %>
+    <font size="2">
+      <table class="table table-striped">
+        <thead class="thead-dark">
           <tr>
-            <th scope="row"><%=obra.nombre%></th>
-            <td><%=obra.etapa%></td>
-            <td><%=obra.comuna%></td>
-            <td>$<%=obra.monto_contrato%></td>
-            <td>
-              <%if obra.fecha_inicio.empty?%>
-                <%date=""%>
-              <%else%>
-                <%date=Date.parse(obra.fecha_inicio)%> 
-                <%date=date.strftime("%d-%m-%Y")%>
-              <%end%>
-              <%=date%>
-            </td>
-            <td><%=obra.porcentaje_avance%>%</td>
-            <td width="28%">
-              <div class="row">
-                <a class="btn btn-success" href="/vista_obra/<%=obra.id%>">Detalles</a> &nbsp;
-                <a class="btn btn-primary" href="/modificar_obra/<%=obra.id%>">Modificar</a> &nbsp;
-                <form action="/obra/<%=obra.id%>" method="post">
-                  <input type='hidden' name='_method' value='DELETE'/>
-                  <button type='submit' class='btn btn-danger'>Eliminar</button>
-                </form>
-              </div>
-            </td>
+            <th scope="col" width="20%">Nombre</th>
+            <th scope="col">Etapa</th>
+            <th scope="col">Comuna</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Inicio</th>
+            <th scope="col">Avance</th>
+            <th scope="col" style="text-align:center">Acciones</th>
           </tr>
-        <% end %>
-      </table><br>
+        </thead>
+        <tbody>
+          <% @lista_de_obras.each do |obra| %>
+            <tr>
+              <th scope="row"><%=obra.nombre%></th>
+              <td><%=obra.etapa%></td>
+              <td style="text-align:center"><%=obra.comuna%></td>
+              <td>$<%=obra.monto_contrato%></td>
+              <td>
+                <%if obra.fecha_inicio.empty?%>
+                  <%date=""%>
+                <%else%>
+                  <%date=Date.parse(obra.fecha_inicio)%> 
+                  <%date=date.strftime("%d-%m-%Y")%>
+                <%end%>
+                <%=date%>
+              </td>
+              <td style="text-align:center"><%=obra.porcentaje_avance%>%</td>
+              <td width="28%">
+                <div class="row">
+                  <a class="btn btn-success" href="/vista_obra/<%=obra.id%>">Detalles</a> &nbsp;
+                  <a class="btn btn-primary" href="/modificar_obra/<%=obra.id%>">Modificar</a> &nbsp;
+                  <form action="/obra/<%=obra.id%>" method="post">
+                    <input type='hidden' name='_method' value='DELETE'/>
+                    <button type='submit' class='btn btn-danger'>Eliminar</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </font><br>
     <a class="btn btn-warning" href="/">Inicio</a>
     <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>
