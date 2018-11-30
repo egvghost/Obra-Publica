@@ -1,4 +1,3 @@
-require 'date'
 require 'byebug'
 require './models/obras_parser.rb'
 
@@ -35,10 +34,10 @@ class ObraPublica
     raise InputException.new("ID:#{@id} - La descripción no puede contener más de 2000 caracteres") unless (@descripcion.length <= 2000)
     #raise InputException.new('El formato de fecha ingresado no es válido') unless...
     unless (@fecha_inicio.empty? || @fecha_fin_planeada.empty?)
-      raise InputException.new("ID:#{@id} - La fecha final estimada debe ser posterior a la fecha de inicio") unless (Date.parse(@fecha_inicio) <=> Date.parse(@fecha_fin_planeada)) == -1
+      raise InputException.new("ID:#{@id} - La fecha final estimada debe ser posterior a la fecha de inicio") unless @fecha_inicio < @fecha_fin_planeada
     end
     unless (@fecha_inicio.empty? || @fecha_fin_real.empty?)
-      raise InputException.new("ID:#{@id} - La fecha de finalización debe ser posterior a la fecha de inicio") unless (Date.parse(@fecha_inicio) <=> Date.parse(@fecha_fin_real)) == -1
+      raise InputException.new("ID:#{@id} - La fecha de finalización debe ser posterior a la fecha de inicio") unless @fecha_inicio < @fecha_fin_real
     end
     if @etapa == 'Finalizada' then 
       raise InputException.new("ID:#{@id} - Toda obra FINALIZADA debe tener un porcentaje de avance del 100% y una fecha de finalización real acorde") unless (@porcentaje_avance == 100 && ! @fecha_fin_real.empty?)
