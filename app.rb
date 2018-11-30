@@ -111,14 +111,20 @@ get '/estadisticas' do
   @title = 'OP -CABA [Estadísticas]'
   obras_comuna = Hash.new(0)
   obras_año = Hash.new(0)
+  @obras_excedidas = []
   persistence_manager = PersistenceManager.new
   #byebug
   @lista_de_obras = persistence_manager.lista_obras
-  @lista_de_obras.each  {|obra| obras_comuna["Comuna #{obra.comuna}"] += 1 }
-  @lista_de_obras.each  {|obra| obras_año["Año #{Date.parse(obra.fecha_fin_real).year}"] += 1 unless obra.fecha_fin_real.empty?}
-
-  @obras_comuna_max = obras_comuna.select {|k,v| v == obras_comuna.values.max}#.to_a.map &:first
-  @obras_año_max = obras_año.select {|k,v| v == obras_año.values.max}#.to_a.map &:first
+  @lista_de_obras.each do |obra| 
+    obras_comuna["Comuna #{obra.comuna}"] += 1
+    unless obra.fecha_fin_real.empty?
+      obras_año["Año #{Date.parse(obra.fecha_fin_real).year}"] += 1
+      if obra.fecha_fin_real > obra.fecha_fin_planeada then @obras_excedidas << obra
+      end
+    end
+  end
+  @obras_comuna_max = obras_comuna.select {|k,v| v == obras_comuna.values.max}
+  @obras_año_max = obras_año.select {|k,v| v == obras_año.values.max}
 
   erb :estadisticas
 end
