@@ -120,6 +120,35 @@ get '/estadisticas' do
   erb :estadisticas
 end
 
+post '/consulta_obras' do
+  @title = 'OP -CABA [Consulta]'
+  @obras_año = []
+  @año = params[:año]
+  @opcion = params[:opcion]
+  persistence_manager = PersistenceManager.new
+  #byebug
+  @lista_de_obras = persistence_manager.lista_obras
+  case @opcion
+    when 'inicio' then 
+      #byebug
+      #@obras_año << @lista_de_obras.select {|obra| Date.parse(obra.fecha_inicio).year.to_s == @año unless obra.fecha_inicio.empty?}
+      @lista_de_obras.each do |obra| 
+        if ! obra.fecha_inicio.empty?
+          if (Date.parse(obra.fecha_inicio).year).to_s == @año then @obras_año << obra
+          end
+        end
+      end
+    when 'fin' then
+      @lista_de_obras.each do |obra| 
+        if ! obra.fecha_fin_real.empty?
+          if (Date.parse(obra.fecha_fin_real).year).to_s == @año then @obras_año << obra
+          end
+        end
+      end
+  end
+  erb :consulta_obras
+end
+
 get '/contacto' do
   @title = 'OP -CABA [Contacto]'
   erb :contacto
