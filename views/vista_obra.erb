@@ -1,6 +1,13 @@
 <div class="card">
   <h5 class="card-header">Detalles de la Obra - ID:<%=@obra.id%></h5>
   <div class="card-body">
+    <% if @errors %>
+      <% @errors.each do |error| %>
+        <div class="alert alert-danger" role="alert">
+          <%= error%>
+        </div>
+      <% end %>
+    <% end %>
     <% if @success %>
       <div class="alert alert-success" role="alert">
           Obra ingresada correctamente
@@ -22,29 +29,11 @@
       </div>
       <div class="col">
         <strong>Fecha de inicio: </strong>
-        <%if @obra.fecha_inicio.empty?%>
-          <%date=""%>
-        <%else%>
-          <%date=Date.parse(@obra.fecha_inicio)%> 
-          <%date=date.strftime("%d-%m-%Y")%>
-        <%end%>
-        <%=date%><br><br>
+        <%=Date.parse(@obra.fecha_inicio).strftime("%d-%m-%Y") unless @obra.fecha_inicio.empty?%><br><br>
         <strong>Fecha estimada de fin: </strong>
-        <%if @obra.fecha_fin_planeada.empty?%>
-          <%date=""%>
-        <%else%>
-          <%date=Date.parse(@obra.fecha_fin_planeada)%> 
-          <%date=date.strftime("%d-%m-%Y")%>
-        <%end%>
-        <%=date%><br><br>
+        <%=Date.parse(@obra.fecha_fin_planeada).strftime("%d-%m-%Y") unless @obra.fecha_fin_planeada.empty?%><br><br>
         <strong>Fecha de finalización: </strong>
-        <%if @obra.fecha_fin_real.empty?%>
-          <%date=""%>
-        <%else%>
-          <%date=Date.parse(@obra.fecha_fin_real)%> 
-          <%date=date.strftime("%d-%m-%Y")%>
-        <%end%>
-        <%=date%><br><br>
+        <%=Date.parse(@obra.fecha_fin_real).strftime("%d-%m-%Y") unless @obra.fecha_fin_real.empty?%><br><br>
         <strong>Porcentaje de avance: </strong><%=@obra.porcentaje_avance%>%<br><br>
         <strong>Imagen:<br>
           <img class="center-block img-responsive mb-3" src="<%=@obra.imagen%>" style="max-width:80%;">

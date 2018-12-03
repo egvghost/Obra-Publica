@@ -27,8 +27,8 @@ post '/nueva_obra' do
     break if persistence_manager.obra(@id).nil?
   end
   begin
-    @nueva_obra = ObraPublica.new(@id, params['nombre'], params['etapa'], params['tipo'], params['area'], params['descripcion'], params['monto'], 
-    params['comuna'], params['barrio'], params['direccion'], params['fecha_inicio'], params['fecha_fin_planeada'], params['fecha_fin_real'], params['avance'], params['imagen'])
+    @nueva_obra = ObraPublica.new(@id, params[:nombre], params[:etapa], params[:tipo], params[:area], params[:descripcion], params[:monto], 
+    params[:comuna], params[:barrio], params[:direccion], params[:fecha_inicio], params[:fecha_fin_planeada], params[:fecha_fin_real], params[:avance], params[:imagen])
     persistence_manager = PersistenceManager.new
     persistence_manager.crear_obra @nueva_obra
   rescue => exception
@@ -66,29 +66,20 @@ end
 
 put '/modificar_obra/:id' do
   @errors = []
+  @success_delete = false
   persistence_manager = PersistenceManager.new
-
+  @obra = persistence_manager.obra(params[:id])
   begin
-    @obra = persistence_manager.obra(params[:id])
-    @obra.nombre = params[:nombre]
-    @obra.etapa = params[:etapa]
-    @obra.tipo = params[:tipo]
-    @obra.area_responsable = params[:area]
-    @obra.descripcion = params[:descripcion]
-    @obra.monto_contrato = params[:monto]
-    @obra.comuna = params[:comuna]
-    @obra.barrio = params[:barrio]
-    @obra.direccion = params[:direccion]
-    @obra.fecha_inicio = params[:fecha_inicio]
-    @obra.fecha_fin_planeada = params[:fecha_fin_planeada]
-    @obra.fecha_fin_real = params[:fecha_fin_real]
-    @obra.porcentaje_avance = params[:avance]
-    @obra.imagen = params[:imagen]
+    @obra = ObraPublica.new(params[:id], params[:nombre], params[:etapa], params[:tipo], params[:area], 
+    params[:descripcion], params[:monto], params[:comuna], params[:barrio], params[:direccion], 
+    params[:fecha_inicio], params[:fecha_fin_planeada], params[:fecha_fin_real], params[:avance], params[:imagen])
     persistence_manager.modificar_obra(@obra)
   rescue => exception
     @errors << exception.message
   end
-
+  if @errors.empty?
+    @success = true
+  end
   erb :vista_obra
 end
 

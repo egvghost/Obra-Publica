@@ -11,20 +11,20 @@ class ObraPublica
     comuna, barrio, direccion, fecha_inicio, fecha_fin_planeada, fecha_fin_real, porcentaje_avance, imagen)
 
     @id = id.to_i
-    @nombre = nombre.to_s
-    @etapa = etapa.to_s
-    @tipo = tipo.to_s
-    @area_responsable = area_responsable.to_s
-    @descripcion = descripcion.to_s
-    @monto_contrato = monto_contrato.to_f
+    @nombre = nombre
+    @etapa = etapa
+    @tipo = tipo
+    @area_responsable = area_responsable
+    @descripcion = descripcion
+    @monto_contrato = monto_contrato.to_i
     @comuna = comuna.to_i
-    @barrio = barrio.to_s
-    @direccion = direccion.to_s
+    @barrio = barrio
+    @direccion = direccion
     @fecha_inicio = fecha_inicio.to_s
     @fecha_fin_planeada = fecha_fin_planeada.to_s
     @fecha_fin_real = fecha_fin_real.to_s
     @porcentaje_avance = porcentaje_avance.to_i
-    @imagen = imagen.to_s
+    @imagen = imagen
     etapas = ['En Ejecución', 'En Licitación', 'En Proyecto', 'Finalizada']
     #byebug
     raise InputException.new("ID:#{@id} - La etapa ingresada no coincide con las opciones permitidas") unless etapas.include?(@etapa)
