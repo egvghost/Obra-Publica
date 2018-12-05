@@ -129,7 +129,7 @@ post '/consulta_obras' do
   #byebug
   @lista_de_obras = persistence_manager.lista_obras
   case @opcion
-    when 'inicio' then 
+    when 'iniciadas' then 
       #byebug
       #@obras_año << @lista_de_obras.select {|obra| Date.parse(obra.fecha_inicio).year.to_s == @año unless obra.fecha_inicio.empty?}
       @lista_de_obras.each do |obra| 
@@ -138,7 +138,7 @@ post '/consulta_obras' do
           end
         end
       end
-    when 'fin' then
+    when 'finalizadas' then
       @lista_de_obras.each do |obra| 
         if ! obra.fecha_fin_real.empty?
           if (Date.parse(obra.fecha_fin_real).year).to_s == @año then @obras_año << obra

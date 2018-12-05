@@ -1,5 +1,5 @@
 <div class="card">
-  <h5 class="card-header">Estadísticas</h5>
+  <h5 class="card-header">Consulta: Obras <%=@opcion%> en el año <%=@año%></h5>
   <div class="card-body">
     <% if @errors %>
       <% @errors.each do |error| %>
@@ -15,10 +15,10 @@
             <th scope="col" width="17%">Nombre</th>
             <th scope="col" width="7%">Tipo</th>
             <th scope="col" width="15%">Área</th>
-            <th scope="col">Comuna</th>
+            <th scope="col" style="text-align:center">Comuna</th>
             <th scope="col">Fecha Inicio</th>
             <th scope="col">Fecha Fin</th>
-            <th scope="col">Avance</th>
+            <th scope="col" style="text-align:center">Avance</th>
             <th scope="col" style="text-align:center">Acción</th>
           </tr>
         </thead>
@@ -31,12 +31,15 @@
               <td style="text-align:center"><%=obra.comuna%></td>
               <td><%=Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?%></td>
               <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
-              <td><%=obra.porcentaje_avance%></td>
-              <td><a class="btn btn-success" href="/vista_obra/<%=obra.id%>" style="float:right">Detalles</a></td>
+              <td style="text-align:center"><%=obra.porcentaje_avance%>%</td>
+              <td style="text-align:center"><a class="btn btn-success" href="/vista_obra/<%=obra.id%>">Detalles</a></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    </font><br>
+    </font><br><br>
+    <a class="btn btn-warning" href="/">Inicio</a> &nbsp;
+    <a class="btn btn-secondary" href="/estadisticas">Volver</a>
+    <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>
 </div>  

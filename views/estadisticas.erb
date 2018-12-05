@@ -26,18 +26,20 @@
         </ul><br>
       </div>
     </div>
-    <form action='/consulta_obras' method='post'>
-      <p class="card-text">-Consultar Obras por año: <input type="number" name="año" min="0" placeholder="Ingresar año deseado"></p>        
-      <div class="row">
-        <div class="col">
-          <input type="radio" name="opcion" value="inicio">Iniciadas<br>
-          <input type="radio" name="opcion" value="fin">Finalizadas<br>
+    <div class="col-6">
+      <form action='/consulta_obras' method='post'>
+        <p class="card-text">-Consultar Obras por año: <input type="number" name="año" min="0" placeholder="Ingresar año deseado"></p>        
+        <div class="row">
+          <div class="col">
+            <input type="radio" name="opcion" value="iniciadas">Iniciadas<br>
+            <input type="radio" name="opcion" value="finalizadas">Finalizadas<br>
+          </div>
+          <div class="col-5">
+            <input type="submit" value="Consultar" class='btn btn-primary'>
+          </div>
         </div>
-        <div class="col">
-          <input type="submit" value="Consultar" class='btn btn-primary'>
-        </div>
-      </div>
-    </form><br><br>
+      </form>
+    </div><br><br>
     <p class="card-text">-Obras que excedieron la fecha final originalmente estimada:</p>
     <font size="1.5">
       <table class="table table-striped">
@@ -70,6 +72,8 @@
           <% end %>
         </tbody>
       </table>
-    </font><br>
+    </font><br><br>
+    <a class="btn btn-warning" href="/">Inicio</a>
+    <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>
 </div>
