@@ -103,6 +103,8 @@ get '/estadisticas' do
   obras_comuna = Hash.new(0)
   obras_año = Hash.new(0)
   @obras_excedidas = []
+  @excesos = {}
+  @porcentaje_excesos = {}
   persistence_manager = PersistenceManager.new
   #byebug
   @lista_de_obras = persistence_manager.lista_obras
@@ -110,10 +112,16 @@ get '/estadisticas' do
     obras_comuna["Comuna #{obra.comuna}"] += 1
     unless obra.fecha_fin_real.empty?
       obras_año["Año #{Date.parse(obra.fecha_fin_real).year}"] += 1
-      if obra.fecha_fin_real > obra.fecha_fin_planeada then @obras_excedidas << obra
+      if obra.fecha_fin_real > obra.fecha_fin_planeada then 
+        @obras_excedidas << obra
+        @excesos[obra] = (Date.parse(obra.fecha_fin_real)-Date.parse(obra.fecha_fin_planeada)).to_i
+        @porcentaje_excesos[obra] = ((((Date.parse(obra.fecha_fin_real)-Date.parse(obra.fecha_inicio)).to_f / 
+        (Date.parse(obra.fecha_fin_planeada)-Date.parse(obra.fecha_inicio)).to_f) - 1) * 100).to_i
       end
     end
   end
+  @exceso_promedio_dias = @excesos.values.sum/@excesos.size
+  @exceso_promedio_porcentaje = @porcentaje_excesos.values.sum/@porcentaje_excesos.size
   @obras_comuna_max = obras_comuna.select {|k,v| v == obras_comuna.values.max}
   @obras_año_max = obras_año.select {|k,v| v == obras_año.values.max}
 

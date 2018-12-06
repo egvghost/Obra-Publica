@@ -13,7 +13,7 @@
         <p class="card-text">-Comuna(s) con mayor cantidad de obras:</p>
         <ul>
           <% @obras_comuna_max.each do |comuna, cant_obras|%>
-            <li><strong><%= comuna %></strong>: <%= cant_obras %></li> 
+            <li><strong><%= comuna %></strong>: <%= cant_obras %> obras</li> 
           <% end %>  
         </ul><br>
       </div>
@@ -21,24 +21,26 @@
         <p class="card-text">-Año(s) en el(los) que se finalizaron mayor cantidad de obras:</p>
         <ul>
           <% @obras_año_max.each do |año, cant_obras|%>
-            <li><strong><%= año %></strong>: <%= cant_obras %></li> 
+            <li><strong><%= año %></strong>: <%= cant_obras %> obras</li> 
           <% end %>  
         </ul><br>
       </div>
     </div>
-    <div class="col-6">
-      <form action='/consulta_obras' method='post'>
-        <p class="card-text">-Consultar Obras por año: <input type="number" name="año" min="0" placeholder="Ingresar año deseado"></p>        
-        <div class="row">
-          <div class="col">
-            <input type="radio" name="opcion" value="iniciadas">Iniciadas<br>
-            <input type="radio" name="opcion" value="finalizadas">Finalizadas<br>
+    <div class="row">
+      <div class="col-6">
+        <form action='/consulta_obras' method='post'>
+          <p class="card-text">-Consultar Obras por año:&nbsp; &nbsp; <input type="number" name="año" min="0" placeholder="Ingresar año"></p>        
+          <div class="row">
+            <div class="col">
+              <input type="radio" name="opcion" value="iniciadas">Iniciadas<br>
+              <input type="radio" name="opcion" value="finalizadas">Finalizadas<br>
+            </div>
+            <div class="col-5">
+              <input type="submit" value="Consultar" class='btn btn-primary'>
+            </div>
           </div>
-          <div class="col-5">
-            <input type="submit" value="Consultar" class='btn btn-primary'>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div><br><br>
     <p class="card-text">-Obras que excedieron la fecha final originalmente estimada:</p>
     <font size="1.5">
@@ -46,13 +48,12 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col" width="17%">Nombre</th>
-            <th scope="col" width="7%">Tipo</th>
             <th scope="col" width="15%">Área</th>
-            <th scope="col">Comuna</th>
             <th scope="col">Inicio</th>
             <th scope="col">Fin Estimado</th>
             <th scope="col">Fin Real</th>
             <th scope="col">Exceso (días)</th>
+            <th scope="col">Exceso (porcentaje)</th>
             <th scope="col" style="text-align:center">Acción</th>
           </tr>
         </thead>
@@ -60,19 +61,20 @@
           <% @obras_excedidas.each do |obra|%>
             <tr>
               <th scope="row"><%=obra.nombre%></th>
-              <td><%=obra.tipo%></td>
               <td><%=obra.area_responsable%></td>
-              <td style="text-align:center"><%=obra.comuna%></td>
               <td><%=Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?%></td>
               <td><%=Date.parse(obra.fecha_fin_planeada).strftime("%d-%m-%Y") unless obra.fecha_fin_planeada.to_s.empty?%></td>
               <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
-              <td style="text-align:center"><strong><%=(Date.parse(obra.fecha_fin_real)-Date.parse(obra.fecha_fin_planeada)).to_i%></td>
+              <td style="text-align:center"><strong><%=@excesos[obra]%></td>
+              <td style="text-align:center"><strong><%=@porcentaje_excesos[obra]%>%</td>
               <td><a class="btn btn-success" href="/vista_obra/<%=obra.id%>" style="float:right">Detalles</a></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    </font><br><br>
+    </font><br>
+    <p><strong>-Exceso promedio de las obras: <%= @exceso_promedio_dias %> días (<%= @exceso_promedio_porcentaje %>% de la duración estimada)</strong>
+    <br><br><br>
     <a class="btn btn-warning" href="/">Inicio</a>
     <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>
