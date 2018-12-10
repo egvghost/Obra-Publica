@@ -1,0 +1,92 @@
+Los profesores del curso somos Product Owners que necesitamos una aplicación que cubra las
+necesidades de nuestro negocio. Por consultas para aclarar el enunciado que se detalla a continuación,
+deben contactarnos por slack o email.
+Necesitamos construir una interfaz web para ABM (Alta/Baja/Modificación) de obras públicas de la
+Ciudad de Buenos Aires.
+Contamos con un set de datos con información de obras histórico en formato CSV (Comma Separated
+Value).
+La solución debe ser una aplicación Ruby - Sinatra que cumpla con los siguientes puntos:
+•
+•
+•
+•
+•
+•
+•
+Se deben crear los modelos de clase necesarios para resolver el problema.
+Se deben persistir los objetos necesarios para resolver el problema utilizando YAML-STORE.
+Inicialmente los repositorios de datos en formato ".yml " deben estar vacíos y se deben
+inicializar importando los datos provistos en formato csv.
+Se debe contar con una vista donde se muestre el enunciado del TP.
+Se debe contar con un menú de navegación para acceder a las distintas secciones (soluciones a
+los distintos puntos pedidos).
+Se debe contar con una vista de contacto que contenga información sobre ustedes (incluyendo
+foto de perfil).
+Se debe aprovechar las ventajas de utilizar un layout.•
+•
+•
+Se debe dar feedback al usuario sobre las acciones realizadas en la aplicación. Por ejemplo, al
+crear una nueva obra pública, la aplicación me debería mostrar un mensaje de confirmación
+"Obra creada correctamente”.
+Se debe crear las rutas y vistas para obtener información y/o mostrar resultados que se piden en
+los diferentes enunciados.
+Se debe utilizar un framework CSS (Bootstrap por ejemplo).
+Dataset:
+•
+•
+•
+obras.csv (https://ibm.box.com/s/qgssyctohs0j0x4tn9ngzyzbrnxkda63)
+Las obras pueden estar en una de estas 4 etapas:
+o En Ejecución
+o En Licitación
+o En Proyecto
+o Finalizada
+Validaciones:
+o El avance debe estar entre 0% y 100% (inclusive).
+o El monto no puede ser negativo.
+o La etapa sólo puede ser una de las indicadas en el punto anterior.
+o El número de comuna debe estar entre 1 y 15 (inclusive).
+o Las fechas deben ser válidas (definir un formato aceptado y validarlo).
+o Ni la fecha fin estimada ni la real pueden ser anteriores a la fecha inicio.
+o La descripción debe tener un límite de 2000 caracteres.
+o Las obras finalizadas deben tener avance en 100%, el campo “fecha de finalización real”
+completado y deben ser las únicas con esos campos con esas características.
+Requerimientos funcionales:
+1. Poder dar de alta una obra. Basarse aproximadamente en este ejemplo *no completo*:
+2. Poder modificar una obra.3. Poder eliminar una obra. Sólo se puede borrar una obra si la misma está “En proyecto” o “En
+licitación". Caso contrario, el usuario debe ver un mensaje de error diciendo por qué la obra no
+se pudo borrar.
+4. Obtener un listado de obras (ordenado por fecha de inicio de obra en orden descendente, es
+decir, la obra más nueva, debe estar primera) basándose en el siguiente boceto:
+5. Tener una vista de detalles de una obra (basarse en el siguiente boceto).
+6. Tener una página con la siguiente información:
+a. ¿En qué comuna se construyeron más obras?
+b. ¿En qué año se finalizaron más obras?
+c. Listar obras que se excedieron del plazo.
+d. Listar obras que iniciaron/finalizaron en un año (el usuario ingresa en un formulario el
+año de consulta, y si la consulta es por inicio o fin de obra).
+7. Bajo una sección de estadísticas, mostrar:
+a. Cantidad de obras finalizadas por comuna (tomar en cuenta el siguiente boceto):b.
+c.
+d.
+e.
+f.
+Listar las 5 comunas con más obras finalizadas.
+Listar las 5 obras finalizadas que más tardaron.
+Listar las 5 obras finalizadas más caras.
+Distribución porcentual de tipos de obras
+Calcular, para todas las obras que se hayan completado más tarde de lo planeado, en
+qué porcentaje de tiempo se excedieron. Por ejemplo, una obra planificada para
+completarse en 1 año que tomó 18 meses se excede en un 50%. Mostrar el promedio de
+todos estos porcentajes de retraso.
+Documentación:
+•
+•
+•
+•
+•
+https://ruby-doc.org/core-2.2.0/Time.html
+https://github.com/lambdaweb/pillchart
+https://github.com/sinatra/sinatra
+https://getbootstrap.com/
+https://docs.ruby-lang.org/en/2.4.0/YAML/Store.html
