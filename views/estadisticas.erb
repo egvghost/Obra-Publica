@@ -1,5 +1,5 @@
 <div class="card">
-  <h5 class="card-header">Estadísticas &nbsp; <font size="2"><a href="#año">|> Cant x año|</a> <a href="#comuna">|> Cant x comuna|</a>
+  <h5 class="card-header"><strong>Estadísticas</strong> &nbsp; <font size="2"><a href="#año">|> Cant x año|</a> <a href="#comuna">|> Cant x comuna|</a>
   <a href="#consulta">|Consulta x año|</a> <a href="#largas">|Obras + largas|</a> <a href="#porcentajes">|Porcentajes x comuna|</a> <a href="#excedidas">|Fecha Excedida|</a></font></h5>
   <div class="card-body">
 
@@ -140,8 +140,8 @@
                     <tr>
                       <th scope="row" style="text-align:center">#<%=comuna%></th>
                       <td style="text-align:center"><%=@obras_comuna["Comuna #{comuna}"]%></td>
-                      <td style="text-align:center"><%=@obras_terminadas["Comuna #{comuna}"]%></td>
-                      <td style="text-align:center"><%=@graphs["Comuna #{comuna}"].pill%></td>
+                      <td style="text-align:center"><%=@cant_obras_terminadas["Comuna #{comuna}"]%></td>
+                      <td style="text-align:center" title="Finalizadas / Total Comuna"><%=@graphs["Comuna #{comuna}"].pill%></td>
                     </tr>
                   <% end %>
                 </tbody>
@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-    </div><br><br>
+    </div><br>
     <div id="excedidas"></div>
     <p class="card-text">-Obras que excedieron la fecha final originalmente estimada:</p>
     <div class="card">
