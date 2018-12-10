@@ -1,6 +1,8 @@
 <div class="card">
-  <h5 class="card-header">Estadísticas</h5>
+  <h5 class="card-header">Estadísticas &nbsp; <font size="2"><a href="#año">|> Cant x año|</a> <a href="#comuna">|> Cant x comuna|</a>
+  <a href="#consulta">|Consulta x año|</a> <a href="#largas">|Obras + largas|</a> <a href="#porcentajes">|Porcentajes x comuna|</a> <a href="#excedidas">|Fecha Excedida|</a></font></h5>
   <div class="card-body">
+
     <% if @errors %>
       <% @errors.each do |error| %>
         <div class="alert alert-danger" role="alert">
@@ -8,72 +10,184 @@
         </div>
       <% end %>
     <% end %>
+
     <div class="row">
       <div class="col">
-        <p class="card-text">-Comuna(s) con mayor cantidad de obras:</p>
-        <ul>
-          <% @obras_comuna_max.each do |comuna, cant_obras|%>
-            <li><strong><%= comuna %></strong>: <%= cant_obras %> obras</li> 
-          <% end %>  
-        </ul><br>
-      </div>
-      <div class="col">
-        <p class="card-text">-Año(s) en el(los) que se finalizaron mayor cantidad de obras:</p>
-        <ul>
-          <% @obras_año_max.each do |año, cant_obras|%>
-            <li><strong><%= año %></strong>: <%= cant_obras %> obras</li> 
-          <% end %>  
-        </ul><br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <form action='/consulta_obras' method='post'>
-          <p class="card-text">-Consultar Obras por año:&nbsp; &nbsp; <input type="number" name="año" min="0" placeholder="Ingresar año"></p>        
-          <div class="row">
-            <div class="col">
-              <input type="radio" name="opcion" value="iniciadas">Iniciadas<br>
-              <input type="radio" name="opcion" value="finalizadas">Finalizadas<br>
-            </div>
-            <div class="col-5">
-              <input type="submit" value="Consultar" class='btn btn-primary'>
-            </div>
+        <div id="año"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">-Año(s) con mayor cantidad de obras finalizadas:</p>
+            <ul>
+              <% @obras_año_max.each do |año, cant_obras|%>
+                <li><strong><%= año %></strong>: &nbsp;<%= cant_obras %> obras</li> 
+              <% end %>  
+            </ul>
           </div>
-        </form>
+        </div><br>
+        <div id="comuna"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">-Comuna(s) con mayor cantidad de obras:</p>
+            <ul>
+              <% @obras_comuna_max.each do |comuna, cant_obras|%>
+                <li><strong><%= comuna %></strong>: &nbsp;<%= cant_obras %> obras</li> 
+              <% end %>  
+            </ul>
+          </div>
+        </div><br>
+        <div id="finalizadas"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">-Comunas con más obras finalizadas:</p>
+            <ul>
+              <% 5.times do |index| %>
+                <li><strong><%= @comunas_mas_obras_terminadas[index][0] %>: &nbsp;</strong><%= @comunas_mas_obras_terminadas[index][1] %> obras</li> 
+              <% end %>  
+            </ul>
+          </div>
+        </div><br>
+        <div id="largas"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">-Obras finalizadas que más tardaron:</p>
+            <font size="1.5">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col" style="text-align:center">Nombre</th>
+                    <th scope="col" style="text-align:center">Área</th>
+                    <th scope="col" width="20%" style="text-align:center">Tiempo total</th>
+                    <th scope="col" style="text-align:center">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% 5.times do |index| %>
+                    <tr>
+                      <th scope="row"><%=@obras_mas_largas[index][0].nombre%></th>
+                      <td><%=@obras_mas_largas[index][0].area_responsable%></td>
+                      <td style="text-align:center"><strong><%=@obras_mas_largas[index][1]%> días</td>
+                      <td><a class="btn btn-success" href="/vista_obra/<%=@obras_mas_largas[index][0].id%>" style="float:right">Detalles</a></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </font>
+          </div>
+        </div><br>
+        <div id="caras"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">-Obras finalizadas más caras:</p>
+            <font size="1.5">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col" style="text-align:center">Nombre</th>
+                    <th scope="col" style="text-align:center">Área</th>
+                    <th scope="col" width="20%" style="text-align:center">Monto</th>
+                    <th scope="col" style="text-align:center">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% 5.times do |index| %>
+                    <tr>
+                      <th scope="row"><%=@obras_mas_caras[index].nombre%></th>
+                      <td><%=@obras_mas_caras[index].area_responsable%></td>
+                      <td style="text-align:center"><strong>$<%=@obras_mas_caras[index].monto_contrato%></td>
+                      <td><a class="btn btn-success" href="/vista_obra/<%=@obras_mas_caras[index].id%>" style="float:right">Detalles</a></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </font>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div id="consulta"></div>
+        <div class="card">
+          <div class="card-body">
+            <form action='/consulta_obras' method='post'>
+                <p class="card-text">-Consulta de obras por año:&nbsp; &nbsp; <input type="number" name="año" min="0" placeholder="Ingresar año"></p>        
+                <div class="row">
+                  <div class="col">
+                    <input type="radio" name="opcion" value="iniciadas">Iniciadas<br>
+                    <input type="radio" name="opcion" value="finalizadas">Finalizadas<br>
+                  </div>
+                  <div class="col-5">
+                    <input type="submit" value="Consultar" class='btn btn-primary'>
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div><br>
+        <div id="porcentajes"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">-Cantidad de obras finalizadas por comuna:</p>
+            <font size="2">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col" width="17%" style="text-align:center">Comuna</th>
+                    <th scope="col" width="20%" style="text-align:center">Obras</th>
+                    <th scope="col" width="20%" style="text-align:center">Finalizadas</th>
+                    <th scope="col" style="text-align:center">Gráfico (porcentual)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for comuna in 1..15 %>
+                    <tr>
+                      <th scope="row" style="text-align:center">#<%=comuna%></th>
+                      <td style="text-align:center"><%=@obras_comuna["Comuna #{comuna}"]%></td>
+                      <td style="text-align:center"><%=@obras_terminadas["Comuna #{comuna}"]%></td>
+                      <td style="text-align:center"><%=@graphs["Comuna #{comuna}"].pill%></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </font>
+          </div>
+        </div>
       </div>
     </div><br><br>
+    <div id="excedidas"></div>
     <p class="card-text">-Obras que excedieron la fecha final originalmente estimada:</p>
-    <font size="1.5">
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col" width="17%">Nombre</th>
-            <th scope="col" width="15%">Área</th>
-            <th scope="col">Inicio</th>
-            <th scope="col">Fin Estimado</th>
-            <th scope="col">Fin Real</th>
-            <th scope="col">Exceso (días)</th>
-            <th scope="col">Exceso (porcentaje)</th>
-            <th scope="col" style="text-align:center">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @obras_excedidas.each do |obra|%>
-            <tr>
-              <th scope="row"><%=obra.nombre%></th>
-              <td><%=obra.area_responsable%></td>
-              <td><%=Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?%></td>
-              <td><%=Date.parse(obra.fecha_fin_planeada).strftime("%d-%m-%Y") unless obra.fecha_fin_planeada.to_s.empty?%></td>
-              <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
-              <td style="text-align:center"><strong><%=@excesos[obra]%></td>
-              <td style="text-align:center"><strong><%=@porcentaje_excesos[obra]%>%</td>
-              <td><a class="btn btn-success" href="/vista_obra/<%=obra.id%>" style="float:right">Detalles</a></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </font><br>
-    <p><strong>-Exceso promedio de las obras: <%= @exceso_promedio_dias %> días (<%= @exceso_promedio_porcentaje %>% de la duración estimada)</strong>
+    <div class="card">
+      <div class="card-body">
+        <font size="1.5">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col" width="17%">Nombre</th>
+                <th scope="col" width="15%">Área</th>
+                <th scope="col">Inicio</th>
+                <th scope="col">Fin Estimado</th>
+                <th scope="col">Fin Real</th>
+                <th scope="col">Exceso (días)</th>
+                <th scope="col">Exceso (porcentaje)</th>
+                <th scope="col" style="text-align:center">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @obras_excedidas.each do |obra|%>
+                <tr>
+                  <th scope="row"><%=obra.nombre%></th>
+                  <td><%=obra.area_responsable%></td>
+                  <td><%=Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?%></td>
+                  <td><%=Date.parse(obra.fecha_fin_planeada).strftime("%d-%m-%Y") unless obra.fecha_fin_planeada.to_s.empty?%></td>
+                  <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
+                  <td style="text-align:center"><strong><%=@excesos[obra]%></td>
+                  <td style="text-align:center"><strong><%=@porcentaje_excesos[obra]%>%</td>
+                  <td><a class="btn btn-success" href="/vista_obra/<%=obra.id%>" style="float:right">Detalles</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </font>
+      </div>
+    </div><br>
+    <p><strong> &nbsp; -Exceso promedio de las obras: <%= @exceso_promedio_dias %> días (<%= @exceso_promedio_porcentaje %>% de la duración estimada)</strong>
     <br><br><br>
     <a class="btn btn-warning" href="/">Inicio</a>
     <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>

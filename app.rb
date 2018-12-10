@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'byebug'
 require 'date'
+require 'pill_chart'
 require './models/obra_publica.rb'
 require './models/persistence_manager.rb'
 require './models/input_exception.rb'
@@ -100,17 +101,22 @@ end
 
 get '/estadisticas' do
   @title = 'OP -CABA [Estadísticas]'
-  obras_comuna = Hash.new(0)
+  @obras_comuna = Hash.new(0)
+  @obras_terminadas = Hash.new(0)
   obras_año = Hash.new(0)
   @obras_excedidas = []
   @excesos = {}
   @porcentaje_excesos = {}
+  porcentaje_terminadas = {}
+  tiempo_obras = {}
+  @graphs = {}
   persistence_manager = PersistenceManager.new
   #byebug
   @lista_de_obras = persistence_manager.lista_obras
   @lista_de_obras.each do |obra| 
-    obras_comuna["Comuna #{obra.comuna}"] += 1
+    @obras_comuna["Comuna #{obra.comuna}"] += 1
     unless obra.fecha_fin_real.empty?
+      @obras_terminadas["Comuna #{obra.comuna}"] += 1
       obras_año["Año #{Date.parse(obra.fecha_fin_real).year}"] += 1
       if obra.fecha_fin_real > obra.fecha_fin_planeada then 
         @obras_excedidas << obra
@@ -118,12 +124,22 @@ get '/estadisticas' do
         @porcentaje_excesos[obra] = ((((Date.parse(obra.fecha_fin_real)-Date.parse(obra.fecha_inicio)).to_f / 
         (Date.parse(obra.fecha_fin_planeada)-Date.parse(obra.fecha_inicio)).to_f) - 1) * 100).to_i
       end
+      tiempo_obras[obra] = (Date.parse(obra.fecha_fin_real)-Date.parse(obra.fecha_inicio)).to_i
     end
+    porcentaje_terminadas["Comuna #{obra.comuna}"] = @obras_terminadas["Comuna #{obra.comuna}"] * 100 / @obras_comuna["Comuna #{obra.comuna}"]
+    colors = {
+      'background' => '#b9d2ad', # the background colour
+      'foreground' => '#38761d', # the pill color when it's a simple pill (not a state pill)
+    }
+    @graphs["Comuna #{obra.comuna}"] = PillChart::SimplePillChart.new(10, 100, porcentaje_terminadas["Comuna #{obra.comuna}"], 100, :simple, colors)
   end
   @exceso_promedio_dias = @excesos.values.sum/@excesos.size
   @exceso_promedio_porcentaje = @porcentaje_excesos.values.sum/@porcentaje_excesos.size
-  @obras_comuna_max = obras_comuna.select {|k,v| v == obras_comuna.values.max}
+  @obras_comuna_max = @obras_comuna.select {|k,v| v == @obras_comuna.values.max}
   @obras_año_max = obras_año.select {|k,v| v == obras_año.values.max}
+  @comunas_mas_obras_terminadas = @obras_terminadas.sort_by {|k,v| -v}
+  @obras_mas_largas = tiempo_obras.sort_by {|k,v| -v}
+  @obras_mas_caras = @lista_de_obras.sort_by {|obra| -obra.monto_contrato}
 
   erb :estadisticas
 end
