@@ -35,13 +35,13 @@
         <strong>Fecha de finalización: </strong>
         <%=Date.parse(@obra.fecha_fin_real).strftime("%d-%m-%Y") unless @obra.fecha_fin_real.empty?%><br><br>
         <strong>Porcentaje de avance: </strong><%=@obra.porcentaje_avance%>%<br><br>
-        <strong>Imagen:<br>
+        <strong>Imagen:<br><br>
           <img class="center-block img-responsive mb-3" src="<%=@obra.imagen%>" style="max-width:80%;">
       </div>
     </div><br><br>
     <div class="row justify-content-around">
       <a class="btn btn-warning" href="/">Inicio</a> &nbsp;
-      <a class="btn btn-secondary" href="/lista_obras">Lista de Obras</a> &nbsp;
+      <a class="btn btn-info" href="/lista_obras">Lista de Obras</a> &nbsp;
       <% if @success %>
         <a class="btn btn-success" href="/nueva_obra">Cargar nueva Obra</a> &nbsp;
       <% end %>

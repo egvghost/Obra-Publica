@@ -32,14 +32,14 @@
               <td><%=Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?%></td>
               <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
               <td style="text-align:center"><%=obra.porcentaje_avance%>%</td>
-              <td style="text-align:center"><a class="btn btn-success" href="/vista_obra/<%=obra.id%>">Detalles</a></td>
+              <td style="text-align:center"><a class="btn btn-info" href="/vista_obra/<%=obra.id%>">Detalles</a></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </font><br><br>
     <a class="btn btn-warning" href="/">Inicio</a> &nbsp;
-    <a class="btn btn-secondary" href="/estadisticas">Volver</a>
+    <a class="btn btn-primary" href="/estadisticas">Volver</a>
     <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>
 </div>  

@@ -37,7 +37,7 @@
               <td style="text-align:center"><%=obra.porcentaje_avance%>%</td>
               <td width="28%">
                 <div class="row">
-                  <a class="btn btn-success" href="/vista_obra/<%=obra.id%>">Detalles</a> &nbsp;
+                  <a class="btn btn-info" href="/vista_obra/<%=obra.id%>">Detalles</a> &nbsp;
                   <a class="btn btn-primary" href="/modificar_obra/<%=obra.id%>">Modificar</a> &nbsp;
                   <form action="/obra/<%=obra.id%>" method="post">
                     <input type='hidden' name='_method' value='DELETE'/>
@@ -48,7 +48,7 @@
             </tr>
           <% end %>
         </table>
-      </font><br>
+      </font><br><br>
     <a class="btn btn-warning" href="/">Inicio</a>
     <a href="#top"><img src="/images/pics/up_arrow.jpg" style="max-width:3%; float:right"/></a>
   </div>

@@ -27,7 +27,7 @@
         <div id="comuna"></div>
         <div class="card">
           <div class="card-body">
-            <p class="card-text">-Comuna(s) con mayor cantidad de obras:</p>
+            <p class="card-text">-Comuna(s) con mayor cantidad de obras finalizadas:</p>
             <ul>
               <% @obras_comuna_max.each do |comuna, cant_obras|%>
                 <li><strong><%= comuna %></strong>: &nbsp;<%= cant_obras %> obras</li> 
@@ -66,7 +66,7 @@
                       <th scope="row"><%=@obras_mas_largas[index][0].nombre%></th>
                       <td><%=@obras_mas_largas[index][0].area_responsable%></td>
                       <td style="text-align:center"><strong><%=@obras_mas_largas[index][1]%> días</td>
-                      <td><a class="btn btn-success" href="/vista_obra/<%=@obras_mas_largas[index][0].id%>" style="float:right">Detalles</a></td>
+                      <td><a class="btn btn-info" href="/vista_obra/<%=@obras_mas_largas[index][0].id%>" style="float:right">Detalles</a></td>
                     </tr>
                   <% end %>
                 </tbody>
@@ -94,7 +94,7 @@
                       <th scope="row"><%=@obras_mas_caras[index].nombre%></th>
                       <td><%=@obras_mas_caras[index].area_responsable%></td>
                       <td style="text-align:center"><strong>$<%=@obras_mas_caras[index].monto_contrato%></td>
-                      <td><a class="btn btn-success" href="/vista_obra/<%=@obras_mas_caras[index].id%>" style="float:right">Detalles</a></td>
+                      <td><a class="btn btn-info" href="/vista_obra/<%=@obras_mas_caras[index].id%>" style="float:right">Detalles</a></td>
                     </tr>
                   <% end %>
                 </tbody>
@@ -115,7 +115,7 @@
                     <input type="radio" name="opcion" value="finalizadas">Finalizadas<br>
                   </div>
                   <div class="col-5">
-                    <input type="submit" value="Consultar" class='btn btn-primary'>
+                    <input type="submit" value="Consultar" class='btn btn-info'>
                   </div>
                 </div>
             </form>
@@ -179,7 +179,7 @@
                   <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
                   <td style="text-align:center"><strong><%=@excesos[obra]%></td>
                   <td style="text-align:center"><strong><%=@porcentaje_excesos[obra]%>%</td>
-                  <td><a class="btn btn-success" href="/vista_obra/<%=obra.id%>" style="float:right">Detalles</a></td>
+                  <td><a class="btn btn-info" href="/vista_obra/<%=obra.id%>" style="float:right">Detalles</a></td>
                 </tr>
               <% end %>
             </tbody>
