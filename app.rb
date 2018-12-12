@@ -2,6 +2,7 @@ require 'sinatra'
 require 'byebug'
 require 'date'
 require 'pill_chart'
+require 'gruff'
 require './models/obra_publica.rb'
 require './models/persistence_manager.rb'
 require './models/input_exception.rb'
@@ -142,11 +143,18 @@ get '/estadisticas' do
     end
     @exceso_promedio_dias = @excesos.values.sum/@excesos.size
     @exceso_promedio_porcentaje = @porcentaje_excesos.values.sum/@porcentaje_excesos.size
-    @obras_comuna_max = @cant_obras_terminadas.select {|k,v| v == @cant_obras_terminadas.values.max}
+    @obras_comuna_max = @obras_comuna.select {|k,v| v == @obras_comuna.values.max}
     @obras_año_max = obras_año.select {|k,v| v == obras_año.values.max}
     @comunas_mas_obras_terminadas = @cant_obras_terminadas.sort_by {|k,v| -v}
     @obras_mas_largas = tiempo_obras.sort_by {|k,v| -v}
     @obras_mas_caras = obras_terminadas.sort_by {|obras| -obras.monto_contrato}
+    g = Gruff::Pie.new
+    g.title = 'Distribución porcentual por tipo de obra'
+    @tipo_obra.each do |tipo|
+      g.data(tipo[0], tipo[1])
+    end
+    g.theme = {:colors => %w(yellow green red darkblue orange purple lightblue brown), :marker_color => 'black', :background_colors => %w(white grey)}
+    g.write("public/images/chart.png")
   rescue => exception
     @errors << exception.message
   end
