@@ -2,15 +2,6 @@
   <h5 class="card-header"><strong>Estadísticas</strong> &nbsp; <font size="2"><a href="#año">|> Cant x año|</a> <a href="#comuna">|> Cant x comuna|</a>
   <a href="#consulta">|Consulta x año|</a> <a href="#largas">|Obras + largas|</a> <a href="#porcentajes">|Porcentajes x comuna|</a> <a href="#excedidas">|Fecha Excedida|</a></font></h5>
   <div class="card-body">
-
-    <% if @errors %>
-      <% @errors.each do |error| %>
-        <div class="alert alert-danger" role="alert">
-          <%= error%>
-        </div>
-      <% end %>
-    <% end %>
-
     <div class="row">
       <div class="col">
         <div id="año"></div>

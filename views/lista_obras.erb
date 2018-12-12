@@ -1,8 +1,8 @@
 <div class="card">
   <h5 class="card-header">Listado de Obras</h5>
   <div class="card-body">
-    <% if @errors %>
-      <% @errors.each do |error| %>
+    <% if @errors_del %>
+      <% @errors_del.each do |error| %>
         <div class="alert alert-danger" role="alert">
           <%= error%>
         </div>

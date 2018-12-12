@@ -24,13 +24,14 @@ class PersistenceManager
   def obra(id_obra)
     @id_obra = id_obra.to_i
     obra_elegida = lista_obras.select{ |obra| obra.id == @id_obra }
+    raise InputException.new "Obra #{@id_obra} no encontrada" if obra_elegida.empty?
     obra_elegida.first
   end
 
   def eliminar_obra(id_obra)
     @id_obra = id_obra.to_i
     obra_a_eliminar = obra(@id_obra)
-    raise InputException.new 'Obra no encontrada' if obra_a_eliminar.nil?
+    raise InputException.new "Obra #{@id_obra} no encontrada" if obra_a_eliminar.nil?
     @archivo_de_obras.transaction do
       @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == @id_obra}
     end
@@ -38,7 +39,7 @@ class PersistenceManager
 
   def modificar_obra(obra_nueva)
     obra_previa = obra(obra_nueva.id)
-    raise InputException.new 'Obra no encontrada' if obra_previa.nil?
+    raise InputException.new "Obra #{obra_nueva.id} no encontrada" if obra_previa.nil?
     @archivo_de_obras.transaction do
       @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == obra_previa.id}
       @archivo_de_obras['lista_obras'] << obra_nueva
