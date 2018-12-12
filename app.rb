@@ -13,6 +13,7 @@ end
 
 get '/nueva_obra' do
   @title = 'OP -CABA [Nueva obra]'
+  @nueva_obra_selected_in_nav = true
   @etapas = %w[En\ Ejecución En\ Licitación En\ Proyecto Finalizada]
   erb :nueva_obra
 end
@@ -100,6 +101,7 @@ end
 
 get '/estadisticas' do
   @title = 'OP -CABA [Estadísticas]'
+  @estadisticas_selected_in_nav = true
   @errors = []
   @obras_comuna = Hash.new(0)
   @cant_obras_terminadas = Hash.new(0)
@@ -187,14 +189,22 @@ post '/consulta_obras' do
   erb :consulta_obras
 end
 
+get '/enunciado' do
+  @title = 'OP -CABA [Enunciado TP]'
+  @enunciado_selected_in_nav = true
+  erb :enunciado
+end
+
 get '/contacto' do
   @title = 'OP -CABA [Contacto]'
+  @contacto_selected_in_nav = true
   erb :contacto
 end
 
 
 def index
   @title = 'Obra Pública -CABA'
+  @inicio_selected_in_nav = true
   @success = false
   persistence_manager = PersistenceManager.new
   @lista_de_obras = persistence_manager.lista_obras
@@ -216,6 +226,7 @@ end
 
 def obras
   @title = 'OP -CABA [Lista de obras]'
+  @lista_obras_selected_in_nav = true
   @errors = []
   persistence_manager = PersistenceManager.new
   begin
