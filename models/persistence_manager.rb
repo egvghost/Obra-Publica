@@ -32,6 +32,7 @@ class PersistenceManager
     @id_obra = id_obra.to_i
     obra_a_eliminar = obra(@id_obra)
     raise InputException.new "Obra #{@id_obra} no encontrada" if obra_a_eliminar.nil?
+    raise InputException.new "Las obras sólo pueden ser eliminadas si se encuentran en etapa de Proyecto o Licitación" unless (obra_a_eliminar.etapa == 'En Proyecto' || obra_a_eliminar.etapa == 'En Licitación')
     @archivo_de_obras.transaction do
       @archivo_de_obras['lista_obras'].delete_if {|obra| obra.id == @id_obra}
     end
