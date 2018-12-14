@@ -1,9 +1,4 @@
-.pic {
-  border-radius: 50%;
-  height: auto; 
-  width: auto; 
-  max-width: 150px; 
-  max-height: 150px;
+.center {
   display: block;
   margin-left: auto;
   margin-right: auto;
