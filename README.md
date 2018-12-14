@@ -1,10 +1,11 @@
 # TP_Final
 
 
-Instrucciones de uso:
+>Instrucciones de uso:
 
 1) Clonar la applicación a una ubicación local.
 2) Desde una terminal correr el comando 'bundle' para importar todas las gemas necesarias.
+  
   *En caso de que falle la instalación de la gema Gruff debido a su dependencia con ImageMagick, intentar corriendo el siguiente comando, y luego volver a ejecutar 'bundle':
 
     'sudo apt-get install libmagickwand-dev imagemagick'
