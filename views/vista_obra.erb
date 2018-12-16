@@ -29,11 +29,11 @@
       </div>
       <div class="col">
         <strong>Fecha de inicio: </strong>
-        <%=Date.parse(@obra.fecha_inicio).strftime("%d-%m-%Y") unless @obra.fecha_inicio.empty?%><br><br>
+        <%=@fi%><br><br>
         <strong>Fecha estimada de fin: </strong>
-        <%=Date.parse(@obra.fecha_fin_planeada).strftime("%d-%m-%Y") unless @obra.fecha_fin_planeada.empty?%><br><br>
+        <%=@ffp%><br><br>
         <strong>Fecha de finalización: </strong>
-        <%=Date.parse(@obra.fecha_fin_real).strftime("%d-%m-%Y") unless @obra.fecha_fin_real.empty?%><br><br>
+        <%=@ffr%><br><br>
         <strong>Porcentaje de avance: </strong><%=@obra.porcentaje_avance%>%<br><br>
         <strong>Imagen:<br><br>
           <img class="center-block img-responsive mb-3" src="<%=@obra.imagen%>" style="max-width:80%;">

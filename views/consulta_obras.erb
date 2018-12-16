@@ -29,8 +29,8 @@
               <td><%=obra.tipo%></td>
               <td><%=obra.area_responsable%></td>
               <td style="text-align:center"><%=obra.comuna%></td>
-              <td><%=Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?%></td>
-              <td><%=Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?%></td>
+              <td><%=obra.fecha_inicio%></td>
+              <td><%=obra.fecha_fin_real%></td>
               <td style="text-align:center"><%=obra.porcentaje_avance%>%</td>
               <td style="text-align:center"><a class="btn btn-info" href="/vista_obra/<%=obra.id%>">Detalles</a></td>
             </tr>

@@ -179,14 +179,22 @@ post '/consulta_obras' do
       when 'iniciadas' then 
         @lista_de_obras.each do |obra| 
           if ! obra.fecha_inicio.empty?
-            if (Date.parse(obra.fecha_inicio).year).to_s == @año then @obras_año << obra
+            if (Date.parse(obra.fecha_inicio).year).to_s == @año then 
+              obra_aux = obra
+              obra_aux.fecha_inicio = Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?
+              obra_aux.fecha_fin_real = Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?
+              @obras_año << obra_aux
             end
           end
         end
       when 'finalizadas' then
         @lista_de_obras.each do |obra| 
           if ! obra.fecha_fin_real.empty?
-            if (Date.parse(obra.fecha_fin_real).year).to_s == @año then @obras_año << obra
+            if (Date.parse(obra.fecha_fin_real).year).to_s == @año then 
+              obra_aux = obra
+              obra_aux.fecha_inicio = Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?
+              obra_aux.fecha_fin_real = Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?
+              @obras_año << obra_aux
             end
           end
         end
@@ -256,6 +264,9 @@ def vista_obra(id)
   persistence_manager = PersistenceManager.new
   begin
     @obra = persistence_manager.obra(id)
+    @fi = Date.parse(@obra.fecha_inicio).strftime("%d-%m-%Y") unless @obra.fecha_inicio.empty?
+    @ffp = Date.parse(@obra.fecha_fin_planeada).strftime("%d-%m-%Y") unless @obra.fecha_fin_planeada.empty?
+    @ffr = Date.parse(@obra.fecha_fin_real).strftime("%d-%m-%Y") unless @obra.fecha_fin_real.empty?
   rescue => exception
     @errors << exception.message
   end
