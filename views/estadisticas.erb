@@ -44,11 +44,11 @@
         <div class="card">
           <div class="card-body">
             <form action='/consulta_obras' method='post'>
-                <p class="card-text">-Consulta de obras por año:&nbsp; &nbsp; <input type="number" min="1900" max="2099" name="año" placeholder="1900-2099"></p>        
+                <p class="card-text">-Consulta de obras por año:&nbsp; &nbsp; <input type="number" min="1900" max="2099" name="año" placeholder="1900-2099" required></p>        
                 <div class="row">
                   <div class="col">
-                    <input type="radio" name="opcion" value="iniciadas">Iniciadas &nbsp;
-                    <input type="radio" name="opcion" value="finalizadas">Finalizadas
+                    <input type="radio" name="opcion" value="iniciadas" required>Iniciadas &nbsp;
+                    <input type="radio" name="opcion" value="finalizadas" required>Finalizadas
                   </div>
                   <div class="col-5">
                     <input type="submit" value="Consultar" class='btn-sm btn-info'>

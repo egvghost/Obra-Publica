@@ -175,15 +175,18 @@ post '/consulta_obras' do
   #byebug
   begin
     @lista_de_obras = persistence_manager.lista_obras
+    if @opcion.nil? then @errors << "Debe elegir una opción: 'Iniciadas' o 'Finalizadas'"
+    end
+    if @año.empty? then @errors << "Debe ingresar un año"
+    end
     case @opcion
       when 'iniciadas' then 
         @lista_de_obras.each do |obra| 
           if ! obra.fecha_inicio.empty?
             if (Date.parse(obra.fecha_inicio).year).to_s == @año then 
-              obra_aux = obra
-              obra_aux.fecha_inicio = Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?
-              obra_aux.fecha_fin_real = Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?
-              @obras_año << obra_aux
+              obra.fecha_inicio = Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?
+              obra.fecha_fin_real = Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?
+              @obras_año << obra
             end
           end
         end
@@ -191,10 +194,9 @@ post '/consulta_obras' do
         @lista_de_obras.each do |obra| 
           if ! obra.fecha_fin_real.empty?
             if (Date.parse(obra.fecha_fin_real).year).to_s == @año then 
-              obra_aux = obra
-              obra_aux.fecha_inicio = Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?
-              obra_aux.fecha_fin_real = Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?
-              @obras_año << obra_aux
+              obra.fecha_inicio = Date.parse(obra.fecha_inicio).strftime("%d-%m-%Y") unless obra.fecha_inicio.to_s.empty?
+              obra.fecha_fin_real = Date.parse(obra.fecha_fin_real).strftime("%d-%m-%Y") unless obra.fecha_fin_real.to_s.empty?
+              @obras_año << obra
             end
           end
         end
