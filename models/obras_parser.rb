@@ -24,9 +24,13 @@ class ObrasParser
       @fecha_fin_planeada = ""
       @fecha_fin_real = ""
       #byebug
-      @fecha_inicio = Date.strptime(row[:fecha_inicio],"%d/%m/%Y") unless row[:fecha_inicio].nil?
-      @fecha_fin_planeada = Date.strptime(row[:fecha_fin_planeada],"%d/%m/%Y") unless row[:fecha_fin_planeada].nil?
-      @fecha_fin_real = Date.strptime(row[:fecha_fin_real],"%d/%m/%Y") unless row[:fecha_fin_real].nil?
+      begin
+        @fecha_inicio = Date.strptime(row[:fecha_inicio],"%d/%m/%Y") unless row[:fecha_inicio].nil?
+        @fecha_fin_planeada = Date.strptime(row[:fecha_fin_planeada],"%d/%m/%Y") unless row[:fecha_fin_planeada].nil?
+        @fecha_fin_real = Date.strptime(row[:fecha_fin_real],"%d/%m/%Y") unless row[:fecha_fin_real].nil?
+      rescue => exception
+        raise InputException.new("ID:#{row[:id]} - El formato de fecha ingresado no es válido")
+      end
      
       @obras << ObraPublica.new(row[:id], row[:nombre], row[:etapa], row[:tipo], row[:area_responsable], \
       row[:descripcion], row[:monto_contrato], row[:comuna], row[:barrio], row[:direccion], @fecha_inicio, \
