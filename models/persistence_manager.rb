@@ -24,7 +24,6 @@ class PersistenceManager
   def obra(id_obra)
     @id_obra = id_obra.to_i
     obra_elegida = lista_obras.select{ |obra| obra.id == @id_obra }
-    raise InputException.new "Obra #{@id_obra} no encontrada" if obra_elegida.empty?
     obra_elegida.first
   end
 
